@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Prueba Prode</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWUyOTNiIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj7wn5uh77iPPC90ZXh0Pjwvc3ZnPg==">
+    <link rel="manifest" id="admin-manifest" href="">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: white; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        #splash { background: #0f172a; }
+    </style>
+</head>
+<body class="p-6 max-w-lg mx-auto">
+    <div id="splash" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="text-7xl mb-6">🛡️</div>
+        <h1 class="text-white font-black text-2xl italic uppercase tracking-widest text-center px-4">Panel Control</h1>
+        <p class="text-emerald-400 font-bold uppercase tracking-widest text-[10px] mt-2">Prueba Prode</p>
+        <div class="mt-8 border-4 border-slate-600 border-t-emerald-400 rounded-full w-10 h-10 animate-spin opacity-80"></div>
+    </div>
+
+    <header class="mb-6 border-b border-slate-800 pb-4 flex justify-between items-center">
+        <h1 class="text-xl font-black text-emerald-400 italic uppercase tracking-tighter">🛡️ ADMIN: Prueba Prode</h1>
+        <button onclick="loadManual()" class="bg-slate-800 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase hover:bg-slate-700 transition shadow-sm">Refrescar 🟢</button>
+    </header>
+
+    <div id="pwa-banner-admin" class="hidden mb-6 bg-emerald-900/40 border border-emerald-500/50 p-4 rounded-xl flex items-center justify-between shadow-lg">
+        <p class="font-black text-[10px] uppercase text-emerald-100 tracking-wide">Instalá tu Panel Rápido ⚡</p>
+        <button id="pwa-btn-admin" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg font-black text-[10px] uppercase transition">Instalar</button>
+    </div>
+    
+    <div class="space-y-6">
+        <div class="bg-slate-800 p-6 rounded-3xl shadow-xl border border-slate-700">
+            <h2 class="text-xs font-black text-slate-500 uppercase mb-5 tracking-widest flex items-center gap-2"><span>🥇</span> Ranking en Vivo</h2>
+            <div id="ranking" class="space-y-3"></div>
+        </div>
+
+        <div class="bg-slate-800 p-6 rounded-3xl shadow-xl border border-slate-700">
+            <h2 class="text-xs font-black text-slate-500 uppercase mb-5 tracking-widest flex items-center gap-2"><span>👥</span> Actividad Usuarios</h2>
+            <div id="participantes" class="space-y-2"></div>
+        </div>
+
+        <div class="bg-slate-900/50 p-6 rounded-3xl shadow-inner border border-slate-800 mt-6">
+            <h2 class="text-xs font-black text-slate-500 uppercase mb-4 tracking-widest">💡 Guía Rápida</h2>
+            <ul class="space-y-4 text-xs text-slate-400 leading-relaxed">
+                <li class="flex gap-2"><span class="text-emerald-500">👉</span> <strong>Link de Jugadores:</strong> El link corto que te entregamos compartilo por WhatsApp o Instagram con tus clientes.</li>
+                <li class="flex gap-2"><span class="text-emerald-500">👉</span> <strong>Actualizaciones:</strong> Vos no tenés que cargar resultados. Nuestro sistema central actualiza los partidos y este ranking se calcula solo.</li>
+                <li class="flex gap-2"><span class="text-emerald-500">👉</span> <strong>Control:</strong> Acá ves quiénes participan realmente. Podés usar esta lista para entregar los premios al finalizar el Mundial.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // --- SINTETIZADOR DE AUDIO NATIVO ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, type, dur, vol) {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + dur);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + dur);
+        }
+        function playClick() { playTone(600, 'sine', 0.1, 0.05); }
+        function playSplash() { playTone(300, 'triangle', 0.4, 0.05); setTimeout(() => playTone(450, 'triangle', 0.4, 0.05), 150); setTimeout(() => playTone(600, 'triangle', 0.6, 0.05), 300); }
+        
+        document.body.addEventListener('click', () => { if(audioCtx.state === 'suspended') audioCtx.resume(); }, {once:true});
+
+        // --- SISTEMA ANTI-CIERRE ACCIDENTAL ---
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+
+        // PWA Admin
+        const admManifest = { "name": "Admin Prueba Prode", "short_name": "Admin", "start_url": ".", "display": "standalone", "background_color": "#0f172a", "theme_color": "#34d399", "icons": [{"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWUyOTNiIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj7wn5uh77iPPC90ZXh0Pjwvc3ZnPg==", "sizes": "192x192", "type": "image/svg+xml"}] };
+        document.getElementById('admin-manifest').href = URL.createObjectURL(new Blob([JSON.stringify(admManifest)], {type: 'application/json'}));
+
+        let defPAdmin=null;
+        const isIOSAdmin = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isStandaloneAdmin = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        
+        if (!isStandaloneAdmin) {
+            document.getElementById('pwa-banner-admin').classList.remove('hidden');
+            const btnA = document.getElementById('pwa-btn-admin');
+            if(isIOSAdmin) {
+                btnA.innerText = 'Ver cómo';
+                btnA.onclick = () => { alert('Para instalar en iPhone: Tocá el botón "Compartir" (cuadradito con flecha) abajo y elegí "Agregar a Inicio".'); document.getElementById('pwa-banner-admin').classList.add('hidden'); };
+            } else {
+                btnA.onclick = () => { 
+                    playClick();
+                    if(defPAdmin) { defPAdmin.prompt(); defPAdmin=null; } 
+                    else { alert('Tocá los 3 puntitos del navegador y elegí "Instalar aplicación".'); }
+                    document.getElementById('pwa-banner-admin').classList.add('hidden');
+                };
+            }
+        }
+        window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); defPAdmin=e; });
+
+        const API = "https://prode-mundial.emprendimientoweb.workers.dev";
+        const EMPRESA = "Prueba Prode";
+        const TOKEN = "PRODE2026_SECURE_KEY_123";
+        let isFirstLoad = true;
+
+        function loadManual() {
+            playClick();
+            load();
+        }
+
+        async function load() {
+            try {
+                const r = await fetch(API+"?accion=admin_view&empresa="+encodeURIComponent(EMPRESA)+"&token="+TOKEN);
+                const d = await r.json();
+                
+                document.getElementById('ranking').innerHTML = d.ranking.map((u,i)=>`
+                <div class="bg-slate-700/30 p-4 rounded-xl flex justify-between border border-slate-700 items-center hover:bg-slate-700/60 transition">
+                    <span class="font-bold text-sm text-slate-200">#${i+1} ${u.nombre}</span>
+                    <span class="font-black text-emerald-400 text-sm bg-emerald-900/30 px-3 py-1 rounded-lg">${u.puntos} pts</span>
+                </div>`).join('');
+
+                document.getElementById('participantes').innerHTML = d.usuarios.map(u=>`
+                <div class="flex justify-between text-xs text-slate-400 italic px-2 border-b border-slate-700/50 pb-3 pt-2">
+                    <span class="font-bold">${u.nombre}</span>
+                    <span class="text-emerald-400/80 tracking-wide">${u.total_votos} votos emitidos</span>
+                </div>`).join('');
+
+                if(isFirstLoad) {
+                    setTimeout(() => {
+                        const spl = document.getElementById('splash');
+                        if(spl) {
+                            spl.style.opacity = '0';
+                            playSplash();
+                            setTimeout(() => spl.remove(), 500);
+                        }
+                    }, 800);
+                    isFirstLoad = false;
+                }
+            } catch(e) {}
+        }
+
+        load();
+        setInterval(load, 60000);
+    </script>
+</body>
+</html>
