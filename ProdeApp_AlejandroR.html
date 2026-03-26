@@ -13,7 +13,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap');
         :root { --theme: #10B981; }
-        body { font-family: 'Archivo', sans-serif; background: #f1f5f9; padding-bottom: 90px; }
+        body { font-family: 'Archivo', sans-serif; background: #f1f5f9; padding-bottom: 90px; -webkit-tap-highlight-color: transparent; }
         .app-header { background: var(--theme); color: white; padding: 1.5rem; text-align: center; position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
         .tab-content { display: none; padding: 1rem; }
         .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
@@ -62,10 +62,10 @@
         <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5 text-sm text-slate-700 border border-gray-100">
             <h2 class="font-black text-xl text-slate-800 italic uppercase">¿Cómo jugar?</h2>
             <div class="space-y-4">
-                <p><strong>1. Tus Pronósticos 📝:</strong> En la pestaña <b>Votar</b>, elegí si gana el Local, hay Empate, o gana el Visitante. ¡Así de simple!</p>
-                <p><strong>2. Sin restricciones ⏱️:</strong> Podés cambiar tu voto las veces que quieras ANTES de que comience el partido. Una vez que suene el silbato inicial, el voto se bloquea automáticamente.</p>
-                <p><strong>3. Sumá Puntos 🥇:</strong> Por cada acierto del resultado final, sumarás puntos que te harán subir en el Ranking general de la competencia contra los demás jugadores.</p>
-                <p><strong>4. Grupos en Vivo 📊:</strong> El sistema calcula automáticamente las posiciones del Mundial basado en los resultados reales de cada partido.</p>
+                <p><strong>1. Tus Pronósticos 📝:</strong> En la pestaña <b>Votar</b>, elegí si gana el Local, hay Empate, o gana el Visitante.</p>
+                <p><strong>2. Sin restricciones ⏱️:</strong> Podés cambiar tu voto las veces que quieras ANTES de que comience el partido. Una vez iniciado, el voto se bloquea.</p>
+                <p><strong>3. Sumá Puntos 🥇:</strong> Por cada acierto del resultado final, sumarás puntos que te harán subir en el Ranking general de la competencia.</p>
+                <p><strong>4. Grupos en Vivo 📊:</strong> El sistema calcula automáticamente las posiciones del Mundial basado en los resultados reales.</p>
             </div>
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 mt-4 text-center">
                 <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">💡 Tip: Instalá esta app en tu inicio para no perderte ninguna fecha.</p>
@@ -89,23 +89,57 @@
     </nav>
 
     <script>
+        // --- SINTETIZADOR DE AUDIO NATIVO (Sin descargar MP3) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, type, dur, vol) {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + dur);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + dur);
+        }
+        function playClick() { playTone(600, 'sine', 0.1, 0.05); }
+        function playSuccess() { playTone(440, 'sine', 0.1, 0.05); setTimeout(() => playTone(660, 'sine', 0.2, 0.1), 100); }
+        function playSplash() { playTone(300, 'triangle', 0.4, 0.05); setTimeout(() => playTone(450, 'triangle', 0.4, 0.05), 150); setTimeout(() => playTone(600, 'triangle', 0.6, 0.05), 300); }
+
+        // Permitir audio tras primera interacción (Política de navegadores)
+        document.body.addEventListener('click', () => { if(audioCtx.state === 'suspended') audioCtx.resume(); }, {once:true});
+
+        // --- SISTEMA ANTI-CIERRE ACCIDENTAL ---
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+
         // Diccionario de Banderas Mundial
         const banderas = {
-            "Argentina": "🇦🇷", "Francia": "🇫🇷", "Brasil": "🇧🇷", "Inglaterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-            "España": "🇪🇸", "Alemania": "🇩🇪", "Portugal": "🇵🇹", "Italia": "🇮🇹",
-            "Uruguay": "🇺🇾", "Colombia": "🇨🇴", "México": "🇲🇽", "Estados Unidos": "🇺🇸",
-            "Países Bajos": "🇳🇱", "Croacia": "🇭🇷", "Bélgica": "🇧🇪", "Marruecos": "🇲🇦",
-            "Ecuador": "🇪🇨", "Chile": "🇨🇱", "Perú": "🇵🇪", "Venezuela": "🇻🇪", "Paraguay": "🇵🇾",
-            "Bolivia": "🇧🇴", "Canadá": "🇨🇦", "Japón": "🇯🇵", "Corea del Sur": "🇰🇷", "Australia": "🇦🇺",
-            "Arabia Saudita": "🇸🇦", "Senegal": "🇸🇳", "Suiza": "🇨🇭", "Polonia": "🇵🇱", "Gales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿"
+            "Argentina": "🇦🇷", "Brasil": "🇧🇷", "Uruguay": "🇺🇾", "Colombia": "🇨🇴", "Chile": "🇨🇱", 
+            "Perú": "🇵🇪", "Ecuador": "🇪🇨", "Paraguay": "🇵🇾", "Venezuela": "🇻🇪", "Bolivia": "🇧🇴",
+            "Francia": "🇫🇷", "Inglaterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "España": "🇪🇸", "Alemania": "🇩🇪", "Portugal": "🇵🇹", 
+            "Italia": "🇮🇹", "Países Bajos": "🇳🇱", "Holanda": "🇳🇱", "Croacia": "🇭🇷", "Bélgica": "🇧🇪", 
+            "Suiza": "🇨🇭", "Dinamarca": "🇩🇰", "Suecia": "🇸🇪", "Polonia": "🇵🇱", "Serbia": "🇷🇸", 
+            "Gales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿", "Escocia": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "Ucrania": "🇺🇦", "Turquía": "🇹🇷", "Noruega": "🇳🇴", 
+            "Grecia": "🇬🇷", "República Checa": "🇨🇿", "Austria": "🇦🇹", "Hungría": "🇭🇺", "Rumania": "🇷🇴",
+            "México": "🇲🇽", "Estados Unidos": "🇺🇸", "USA": "🇺🇸", "EEUU": "🇺🇸", "Canadá": "🇨🇦", 
+            "Costa Rica": "🇨🇷", "Panamá": "🇵🇦", "Jamaica": "🇯🇲", "Honduras": "🇭🇳", "El Salvador": "🇸🇻",
+            "Marruecos": "🇲🇦", "Senegal": "🇸🇳", "Camerún": "🇨🇲", "Ghana": "🇬🇭", "Túnez": "🇹🇳", 
+            "Nigeria": "🇳🇬", "Egipto": "🇪🇬", "Argelia": "🇩🇿", "Costa de Marfil": "🇨🇮", "Sudáfrica": "🇿🇦",
+            "Japón": "🇯🇵", "Corea del Sur": "🇰🇷", "Australia": "🇦🇺", "Irán": "🇮🇷", "Arabia Saudita": "🇸🇦", 
+            "Qatar": "🇶🇦", "Emiratos Árabes": "🇦🇪", "China": "🇨🇳", "Nueva Zelanda": "🇳🇿"
         };
-        function getFlag(pais) { return banderas[pais] || "🏳️"; }
+        function getFlag(pais) { return banderas[pais.trim()] || "🏳️"; }
 
-        // Inyectar Manifest Dinámico para PWA con fondo sólido
+        // Manifest Dinámico
         const appManifest = { "name": "PRODE AlejandroR", "short_name": "Prode", "start_url": ".", "display": "standalone", "background_color": "#f1f5f9", "theme_color": "#10B981", "icons": [{"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMTBCOTgxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj7wn4+HPC90ZXh0Pjwvc3ZnPg==", "sizes": "192x192", "type": "image/svg+xml"}] };
         document.getElementById('dynamic-manifest').href = URL.createObjectURL(new Blob([JSON.stringify(appManifest)], {type: 'application/json'}));
 
-        // Lógica de Instalación PWA (Smart Banner)
+        // Lógica PWA
         let defP=null;
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
@@ -115,9 +149,10 @@
             const btn = document.getElementById('pwa-btn');
             if(isIOS) {
                 btn.innerText = 'Ver cómo';
-                btn.onclick = () => { alert('Para instalar en iPhone: Tocá el botón "Compartir" (cuadradito con flecha) abajo y elegí "Agregar a Inicio".'); document.getElementById('pwa-banner').classList.add('hidden'); };
+                btn.onclick = () => { playClick(); alert('Para instalar en iPhone: Tocá el botón "Compartir" (cuadradito con flecha) abajo y elegí "Agregar a Inicio".'); document.getElementById('pwa-banner').classList.add('hidden'); };
             } else {
                 btn.onclick = () => { 
+                    playClick();
                     if(defP) { defP.prompt(); defP=null; } 
                     else { alert('Tocá los 3 puntitos de Chrome arriba a la derecha y elegí "Instalar aplicación".'); }
                     document.getElementById('pwa-banner').classList.add('hidden');
@@ -133,6 +168,7 @@
         document.getElementById('user_name').value = localStorage.getItem('prode_user') || '';
         
         function switchTab(id,btn) {
+            playClick();
             document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
             document.querySelectorAll('.btn-nav').forEach(b=>b.classList.remove('active'));
             document.getElementById('tab-'+id).classList.add('active');
@@ -152,6 +188,7 @@
                         const spl = document.getElementById('splash');
                         if(spl) {
                             spl.style.opacity = '0';
+                            playSplash(); // Intenta sonar si el usuario ya tocó la pantalla
                             setTimeout(() => spl.remove(), 500);
                         }
                     }, 800);
@@ -259,6 +296,7 @@
         }
 
         async function votar(id,pred,btn) {
+            playClick();
             const u = document.getElementById('user_name').value.trim();
             if(!u){ alert("¡Escribí tu nombre primero!"); return; }
             btn.innerText = '⏳';
@@ -268,6 +306,7 @@
                 if(d.ok) {
                     localStorage.setItem('voto_'+id, pred);
                     btn.innerText = '✅';
+                    playSuccess();
                     loadData();
                 } else {
                     alert(d.error);
