@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - AlejandroR</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2U4ZThmYyIgZD0iTTEyIDFMMiA1djZjMCA1LjU1IDMuODQgMTAuNzQgOSAxMmM1LjE2IDEuMjYgOSA2LjQ1IDkgMTJWNWMwLTMuODUtMy44NS00LTktNFptNyAxMUgyVjYuNGw4LTIuNyA4IDIuN1YxMlpNMTEgMjIuOUM2LjUyIDIxLjcyIDMgMTYuODcgMyAxMnYtLTRsOSAzIDkgM1YxMmMwIDQuODctMy41MiA5LjcyLTkgMTAuOVpNMTEgMTIuNUwxMiA5bDcuNCAyLjMtMi44LTIuOWgtNS44TDkuMzI4IDEwLjU1IDEyIDcuNjUyIDEyIDkuMjY1TDkuOTIgMTEuNzY5TDExIDEyLjVWiIvPjwvc3ZnPg==">
+    <link rel="manifest" id="admin-manifest" href="">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>body { background: #0f172a; color: white; font-family: sans-serif; }</style>
 </head>
 <body class="p-6 max-w-lg mx-auto">
-    <header class="mb-8 border-b border-slate-800 pb-4 flex justify-between items-center">
+    <header class="mb-6 border-b border-slate-800 pb-4 flex justify-between items-center">
         <h1 class="text-xl font-black text-emerald-400 italic uppercase tracking-tighter">🛡️ ADMIN: AlejandroR</h1>
         <button onclick="load()" class="bg-slate-800 px-3 py-1 rounded-md text-[10px] font-bold uppercase hover:bg-slate-700 transition">Refrescar 🟢</button>
     </header>
+
+    <div id="pwa-banner-admin" class="hidden mb-6 bg-emerald-900/40 border border-emerald-500/50 p-4 rounded-xl flex items-center justify-between">
+        <p class="font-black text-[10px] uppercase text-emerald-100">Instalá tu Panel</p>
+        <button id="pwa-btn-admin" class="bg-emerald-600 px-3 py-1.5 rounded-lg font-black text-[10px] uppercase">Instalar</button>
+    </div>
     
     <div class="space-y-6">
         <div class="bg-slate-800 p-5 rounded-2xl shadow-xl">
@@ -24,9 +30,42 @@
             <h2 class="text-xs font-black text-slate-500 uppercase mb-4 tracking-widest">Actividad de Usuarios</h2>
             <div id="participantes" class="space-y-2"></div>
         </div>
+
+        <div class="bg-slate-800 p-5 rounded-2xl shadow-xl mt-6">
+            <h2 class="text-xs font-black text-slate-500 uppercase mb-4 tracking-widest">💡 Guía Rápida</h2>
+            <ul class="space-y-3 text-xs text-slate-300">
+                <li>👉 <strong>Link de Jugadores:</strong> El link corto que te entregamos compartilo por WhatsApp o Instagram con tus clientes.</li>
+                <li>👉 <strong>Actualizaciones:</strong> Vos no tenés que cargar resultados. Nuestro sistema central actualiza los partidos y este ranking se calcula solo en vivo.</li>
+                <li>👉 <strong>Control:</strong> Acá ves quiénes participan realmente. Podés usar esta lista para entregar los premios al finalizar el Mundial.</li>
+            </ul>
+        </div>
     </div>
 
     <script>
+        // PWA Admin
+        const admManifest = { "name": "Admin AlejandroR", "short_name": "Admin", "start_url": ".", "display": "standalone", "background_color": "#0f172a", "theme_color": "#34d399", "icons": [{"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2U4ZThmYyIgZD0iTTEyIDFMMiA1djZjMCA1LjU1IDMuODQgMTAuNzQgOSAxMmM1LjE2IDEuMjYgOSA2LjQ1IDkgMTJWNWMwLTMuODUtMy44NS00LTktNFptNyAxMUgyVjYuNGw4LTIuNyA4IDIuN1YxMlpNMTEgMjIuOUM2LjUyIDIxLjcyIDMgMTYuODcgMyAxMnYtLTRsOSAzIDkgM1YxMmMwIDQuODctMy41MiA5LjcyLTkgMTAuOVpNMTEgMTIuNUwxMiA5bDcuNCAyLjMtMi44LTIuOWgtNS44TDkuMzI4IDEwLjU1IDEyIDcuNjUyIDEyIDkuMjY1TDkuOTIgMTEuNzY5TDExIDEyLjVWiIvPjwvc3ZnPg==", "sizes": "192x192", "type": "image/svg+xml"}] };
+        document.getElementById('admin-manifest').href = URL.createObjectURL(new Blob([JSON.stringify(admManifest)], {type: 'application/json'}));
+
+        let defPAdmin=null;
+        const isIOSAdmin = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isStandaloneAdmin = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        
+        if (!isStandaloneAdmin) {
+            document.getElementById('pwa-banner-admin').classList.remove('hidden');
+            const btnA = document.getElementById('pwa-btn-admin');
+            if(isIOSAdmin) {
+                btnA.innerText = 'Ver cómo';
+                btnA.onclick = () => { alert('Para instalar en iPhone: Tocá el botón "Compartir" (cuadradito con flecha) abajo y elegí "Agregar a Inicio".'); document.getElementById('pwa-banner-admin').classList.add('hidden'); };
+            } else {
+                btnA.onclick = () => { 
+                    if(defPAdmin) { defPAdmin.prompt(); defPAdmin=null; } 
+                    else { alert('Tocá los 3 puntitos del navegador y elegí "Instalar aplicación".'); }
+                    document.getElementById('pwa-banner-admin').classList.add('hidden');
+                };
+            }
+        }
+        window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); defPAdmin=e; });
+
         const API = "https://prode-mundial.emprendimientoweb.workers.dev";
         const EMPRESA = "AlejandroR";
         const TOKEN = "PRODE2026_SECURE_KEY_123";
