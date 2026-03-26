@@ -7,42 +7,51 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#10B981">
     <title>PRODE - AlejandroR</title>
-    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2U4ZThmYyIgZD0iTTE4IDNoMVYySDVWM2gxYTIgMiAwIDAgMCAyIDJoNGEyIDIgMCAwIDAgMi0yWk02IDVhNCA0IDAgMCAxLTQtNHYxYTRhNCA0IDAgMCAwIDQgNEg2Wm0xMiAwYTQgNCAwIDAgMCA0LTRWMWE0IDQgMCAwIDEtNCA0aDJaTTEyIDE1YTUgNSAwIDEgMSAwLTEwIDUgNSAwIDAgMSAwIDEwWm0wLThhMyAzIDAgMSAwIDAgNiAzIDMgMCAwIDAgMC02Wm03IDEwaDF2Mkgydi0yaDFhMiAyIDAgMCAxIDItMmgxNGEyIDIgMCAwIDEgMiAyWk01IDE5YTUgNSAwIDAgMSAxMCAwSDEwYTUgNSAwIDAgMS01LTVaIi8+PC9zdmc+">
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMTBCOTgxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj7wn4+HPC90ZXh0Pjwvc3ZnPg==">
     <link rel="manifest" id="dynamic-manifest" href="">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap');
         :root { --theme: #10B981; }
         body { font-family: 'Archivo', sans-serif; background: #f1f5f9; padding-bottom: 90px; }
-        .app-header { background: var(--theme); color: white; padding: 1.5rem; text-align: center; position: sticky; top: 0; z-index: 50; }
+        .app-header { background: var(--theme); color: white; padding: 1.5rem; text-align: center; position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
         .tab-content { display: none; padding: 1rem; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         .btn-nav.active { color: var(--theme); }
-        .btn-pred { border: 2px solid #e2e8f0; padding: 0.75rem; border-radius: 1rem; flex: 1; font-weight: 900; font-size: 10px; color: #94a3b8; transition: all 0.2s; }
+        .btn-pred { border: 2px solid #e2e8f0; padding: 0.75rem; border-radius: 1rem; flex: 1; font-weight: 900; font-size: 11px; color: #94a3b8; transition: all 0.2s; }
         .btn-pred.selected { background: var(--theme); color: white; border-color: var(--theme); }
+        /* Splash Screen */
+        #splash { background: var(--theme); }
     </style>
 </head>
 <body>
+    <div id="splash" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="text-7xl mb-6 animate-bounce">🏆</div>
+        <h1 class="text-white font-black text-3xl italic uppercase tracking-widest text-center px-4">AlejandroR</h1>
+        <div class="mt-8 border-4 border-white border-t-transparent rounded-full w-10 h-10 animate-spin opacity-80"></div>
+    </div>
+
     <header class="app-header">
-        <h1 class="font-black italic uppercase text-xl">AlejandroR</h1>
-        <div id="status-bar" class="text-[9px] opacity-70">En vivo 🟢</div>
+        <h1 class="font-black italic uppercase text-xl tracking-wide">AlejandroR</h1>
+        <div id="status-bar" class="text-[10px] opacity-80 mt-1 font-bold">Conectado en vivo 🟢</div>
     </header>
 
     <div id="pwa-banner" class="hidden fixed bottom-24 left-4 right-4 z-[200] bg-slate-900 text-white p-4 rounded-2xl border-2 border-emerald-500 shadow-2xl flex items-center justify-between">
         <p class="font-black text-xs uppercase italic">¡Instalá la App! ⚡</p>
-        <button id="pwa-btn" class="bg-emerald-500 px-4 py-2 rounded-xl font-black text-[10px] uppercase">Instalar</button>
+        <button id="pwa-btn" class="bg-emerald-500 hover:bg-emerald-400 px-4 py-2 rounded-xl font-black text-[10px] uppercase transition">Instalar</button>
     </div>
 
     <main id="tab-votar" class="tab-content active">
-        <div class="bg-white p-4 rounded-2xl shadow-sm mb-4">
-            <label class="text-[10px] font-black text-gray-400 uppercase">Tu Nombre</label>
-            <input type="text" id="user_name" onkeyup="localStorage.setItem('prode_user',this.value.trim())" class="w-full font-bold border-b-2 border-gray-100 py-1 outline-none text-gray-800" placeholder="Escribí tu nombre...">
+        <div class="bg-white p-4 rounded-2xl shadow-sm mb-4 border border-gray-100">
+            <label class="text-[10px] font-black text-slate-400 uppercase tracking-wide">Tu Nombre y Apellido</label>
+            <input type="text" id="user_name" onkeyup="localStorage.setItem('prode_user',this.value.trim())" class="w-full font-black border-b-2 border-slate-100 py-2 outline-none text-slate-800 text-lg focus:border-[var(--theme)] transition-colors" placeholder="Ej: Juan Pérez">
         </div>
         <div id="lista-votar"></div>
     </main>
 
     <main id="tab-ranking" class="tab-content">
-        <div id="tabla-ranking" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div>
+        <div id="tabla-ranking" class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100"></div>
     </main>
 
     <main id="tab-grupos" class="tab-content">
@@ -50,38 +59,50 @@
     </main>
 
     <main id="tab-ayuda" class="tab-content">
-        <div class="bg-white p-5 rounded-2xl shadow-sm space-y-4 text-sm text-gray-700">
-            <h2 class="font-black text-lg text-gray-800 italic uppercase">¿Cómo jugar?</h2>
-            <div class="space-y-3">
-                <p><strong>1. Tus Pronósticos 📝:</strong> En la pestaña <b>Votar</b>, elegí si gana el Local, hay Empate, o gana el Visitante.</p>
-                <p><strong>2. Sin restricciones ⏱️:</strong> Podés cambiar tu voto las veces que quieras ANTES de que comience el partido. Una vez iniciado, el voto se bloquea.</p>
-                <p><strong>3. Sumá Puntos 🥇:</strong> Por cada acierto del resultado final, sumarás puntos que te harán subir en el Ranking general de la competencia.</p>
+        <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5 text-sm text-slate-700 border border-gray-100">
+            <h2 class="font-black text-xl text-slate-800 italic uppercase">¿Cómo jugar?</h2>
+            <div class="space-y-4">
+                <p><strong>1. Tus Pronósticos 📝:</strong> En la pestaña <b>Votar</b>, elegí si gana el Local, hay Empate, o gana el Visitante. ¡Así de simple!</p>
+                <p><strong>2. Sin restricciones ⏱️:</strong> Podés cambiar tu voto las veces que quieras ANTES de que comience el partido. Una vez que suene el silbato inicial, el voto se bloquea automáticamente.</p>
+                <p><strong>3. Sumá Puntos 🥇:</strong> Por cada acierto del resultado final, sumarás puntos que te harán subir en el Ranking general de la competencia contra los demás jugadores.</p>
                 <p><strong>4. Grupos en Vivo 📊:</strong> El sistema calcula automáticamente las posiciones del Mundial basado en los resultados reales de cada partido.</p>
             </div>
-            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100 mt-4 text-center">
-                <p class="text-[10px] font-bold text-emerald-800 uppercase tracking-widest">💡 Tip: Instalá esta app en tu celular para acceder más rápido.</p>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 mt-4 text-center">
+                <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">💡 Tip: Instalá esta app en tu inicio para no perderte ninguna fecha.</p>
             </div>
         </div>
     </main>
 
-    <nav class="fixed bottom-0 w-full bg-white h-[75px] flex items-center justify-around border-t border-gray-100 z-50">
-        <button onclick="switchTab('votar',this)" class="btn-nav active flex flex-col items-center">
-            <span class="text-lg mb-1">📝</span><span class="text-[9px] font-black uppercase">Votar</span>
+    <nav class="fixed bottom-0 w-full bg-white h-[75px] flex items-center justify-around border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-50">
+        <button onclick="switchTab('votar',this)" class="btn-nav active flex flex-col items-center transition-colors">
+            <span class="text-xl mb-1">📝</span><span class="text-[9px] font-black uppercase tracking-wide">Votar</span>
         </button>
-        <button onclick="switchTab('ranking',this)" class="btn-nav flex flex-col items-center">
-            <span class="text-lg mb-1">🥇</span><span class="text-[9px] font-black uppercase">Ranking</span>
+        <button onclick="switchTab('ranking',this)" class="btn-nav flex flex-col items-center transition-colors">
+            <span class="text-xl mb-1">🥇</span><span class="text-[9px] font-black uppercase tracking-wide">Ranking</span>
         </button>
-        <button onclick="switchTab('grupos',this)" class="btn-nav flex flex-col items-center">
-            <span class="text-lg mb-1">📊</span><span class="text-[9px] font-black uppercase">Grupos</span>
+        <button onclick="switchTab('grupos',this)" class="btn-nav flex flex-col items-center transition-colors">
+            <span class="text-xl mb-1">📊</span><span class="text-[9px] font-black uppercase tracking-wide">Grupos</span>
         </button>
-        <button onclick="switchTab('ayuda',this)" class="btn-nav flex flex-col items-center">
-            <span class="text-lg mb-1">❓</span><span class="text-[9px] font-black uppercase">Ayuda</span>
+        <button onclick="switchTab('ayuda',this)" class="btn-nav flex flex-col items-center transition-colors">
+            <span class="text-xl mb-1">❓</span><span class="text-[9px] font-black uppercase tracking-wide">Ayuda</span>
         </button>
     </nav>
 
     <script>
-        // Inyectar Manifest Dinámico para PWA
-        const appManifest = { "name": "PRODE AlejandroR", "short_name": "Prode", "start_url": ".", "display": "standalone", "background_color": "#f1f5f9", "theme_color": "#10B981", "icons": [{"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2U4ZThmYyIgZD0iTTE4IDNoMVYySDVWM2gxYTIgMiAwIDAgMCAyIDJoNGEyIDIgMCAwIDAgMi0yWk02IDVhNCA0IDAgMCAxLTQtNHYxYTRhNCA0IDAgMCAwIDQgNEg2Wm0xMiAwYTQgNCAwIDAgMCA0LTRWMWE0IDQgMCAwIDEtNCA0aDJaTTEyIDE1YTUgNSAwIDEgMSAwLTEwIDUgNSAwIDAgMSAwIDEwWm0wLThhMyAzIDAgMSAwIDAgNiAzIDMgMCAwIDAgMC02Wm03IDEwaDF2Mkgydi0yaDFhMiAyIDAgMCAxIDItMmgxNGEyIDIgMCAwIDEgMiAyWk01IDE5YTUgNSAwIDAgMSAxMCAwSDEwYTUgNSAwIDAgMS01LTVaIi8+PC9zdmc+", "sizes": "192x192", "type": "image/svg+xml"}] };
+        // Diccionario de Banderas Mundial
+        const banderas = {
+            "Argentina": "🇦🇷", "Francia": "🇫🇷", "Brasil": "🇧🇷", "Inglaterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+            "España": "🇪🇸", "Alemania": "🇩🇪", "Portugal": "🇵🇹", "Italia": "🇮🇹",
+            "Uruguay": "🇺🇾", "Colombia": "🇨🇴", "México": "🇲🇽", "Estados Unidos": "🇺🇸",
+            "Países Bajos": "🇳🇱", "Croacia": "🇭🇷", "Bélgica": "🇧🇪", "Marruecos": "🇲🇦",
+            "Ecuador": "🇪🇨", "Chile": "🇨🇱", "Perú": "🇵🇪", "Venezuela": "🇻🇪", "Paraguay": "🇵🇾",
+            "Bolivia": "🇧🇴", "Canadá": "🇨🇦", "Japón": "🇯🇵", "Corea del Sur": "🇰🇷", "Australia": "🇦🇺",
+            "Arabia Saudita": "🇸🇦", "Senegal": "🇸🇳", "Suiza": "🇨🇭", "Polonia": "🇵🇱", "Gales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿"
+        };
+        function getFlag(pais) { return banderas[pais] || "🏳️"; }
+
+        // Inyectar Manifest Dinámico para PWA con fondo sólido
+        const appManifest = { "name": "PRODE AlejandroR", "short_name": "Prode", "start_url": ".", "display": "standalone", "background_color": "#f1f5f9", "theme_color": "#10B981", "icons": [{"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMTBCOTgxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj7wn4+HPC90ZXh0Pjwvc3ZnPg==", "sizes": "192x192", "type": "image/svg+xml"}] };
         document.getElementById('dynamic-manifest').href = URL.createObjectURL(new Blob([JSON.stringify(appManifest)], {type: 'application/json'}));
 
         // Lógica de Instalación PWA (Smart Banner)
@@ -107,6 +128,7 @@
         
         const API = "https://prode-mundial.emprendimientoweb.workers.dev";
         const EMPRESA = "AlejandroR";
+        let isFirstLoad = true;
         
         document.getElementById('user_name').value = localStorage.getItem('prode_user') || '';
         
@@ -124,6 +146,17 @@
                 renderVotar(d.partidos);
                 renderRanking(d.ranking);
                 renderGrupos(d.partidos);
+
+                if(isFirstLoad) {
+                    setTimeout(() => {
+                        const spl = document.getElementById('splash');
+                        if(spl) {
+                            spl.style.opacity = '0';
+                            setTimeout(() => spl.remove(), 500);
+                        }
+                    }, 800);
+                    isFirstLoad = false;
+                }
             } catch(e){}
         }
 
@@ -133,17 +166,17 @@
             c.innerHTML = pending.map(p=>{
                 const v = localStorage.getItem('voto_'+p.id);
                 return `
-                <div class="bg-white p-4 rounded-2xl shadow-sm mb-3">
-                    <div class="flex justify-between text-[9px] font-black text-gray-300 uppercase mb-2">
+                <div class="bg-white p-5 rounded-2xl shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)] mb-4 border border-slate-100">
+                    <div class="flex justify-between text-[11px] font-black text-slate-500 uppercase tracking-wide mb-3 bg-slate-50 p-2 rounded-lg">
                         <span>${p.fase} ${p.grupo}</span><span>${p.fecha_str} ${p.hora_arg}</span>
                     </div>
-                    <div class="flex justify-between items-center mb-4 px-2">
-                        <span class="flex-1 text-center font-bold text-gray-700 text-xs">${p.local}</span>
-                        <span class="mx-2 text-[8px] font-black text-gray-200 uppercase">VS</span>
-                        <span class="flex-1 text-center font-bold text-gray-700 text-xs">${p.visitante}</span>
+                    <div class="flex justify-between items-center mb-5 px-1">
+                        <span class="flex-1 text-center font-black text-slate-800 text-sm flex flex-col items-center gap-1"><span class="text-2xl">${getFlag(p.local)}</span>${p.local}</span>
+                        <span class="mx-3 text-[10px] font-black text-slate-300 uppercase bg-slate-50 px-2 py-1 rounded-full">VS</span>
+                        <span class="flex-1 text-center font-black text-slate-800 text-sm flex flex-col items-center gap-1"><span class="text-2xl">${getFlag(p.visitante)}</span>${p.visitante}</span>
                     </div>
                     <div class="flex gap-2">
-                        ${['Local','Empate','Visitante'].map(o=>`<button onclick="votar(${p.id},'${o}',this)" class="btn-pred ${v===o?'selected':''}">${o}</button>`).join('')}
+                        ${['Local','Empate','Visitante'].map(o=>`<button onclick="votar(${p.id},'${o}',this)" class="btn-pred ${v===o?'selected':''} shadow-sm">${o}</button>`).join('')}
                     </div>
                 </div>`;
             }).join('');
@@ -152,10 +185,10 @@
         function renderRanking(rk) {
             const c = document.getElementById('tabla-ranking');
             c.innerHTML = rk.map((r,i)=>`
-            <div class="flex items-center p-4 border-b border-gray-50">
-                <span class="w-8 font-black text-gray-300 italic text-sm">#${i+1}</span>
-                <span class="flex-1 font-bold text-gray-700 text-sm">${r.nombre}</span>
-                <span class="font-black" style="color:var(--theme)">${r.puntos} pts</span>
+            <div class="flex items-center p-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
+                <span class="w-8 font-black text-slate-400 italic text-base">#${i+1}</span>
+                <span class="flex-1 font-black text-slate-700 text-base ml-2">${r.nombre}</span>
+                <span class="font-black text-lg bg-slate-50 px-3 py-1 rounded-lg border border-slate-100" style="color:var(--theme)">${r.puntos} <span class="text-[10px] text-slate-400">pts</span></span>
             </div>`).join('');
         }
 
@@ -197,26 +230,26 @@
                     return b.gf - a.gf;
                 });
                 
-                h += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-5 overflow-hidden">
-                        <div class="bg-slate-800 text-white p-2 text-center font-black text-[11px] uppercase tracking-widest">${g}</div>
-                        <table class="w-full text-left text-[10px]">
-                            <thead class="bg-gray-50 text-gray-400 border-b border-gray-100">
+                h += `<div class="bg-white rounded-2xl shadow-sm border border-slate-200 mb-6 overflow-hidden">
+                        <div class="bg-slate-800 text-white p-3 text-center font-black text-xs uppercase tracking-[0.2em] shadow-inner">${g}</div>
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-400 border-b border-slate-200">
                                 <tr>
-                                    <th class="p-2 font-black w-6 text-center">#</th>
-                                    <th class="p-2 font-black">Equipo</th>
-                                    <th class="p-2 font-black text-center w-8">PTS</th>
-                                    <th class="p-2 font-black text-center w-6">PJ</th>
-                                    <th class="p-2 font-black text-center w-8">DIF</th>
+                                    <th class="p-3 font-black w-6 text-center">#</th>
+                                    <th class="p-3 font-black">Equipo</th>
+                                    <th class="p-3 font-black text-center w-10">PTS</th>
+                                    <th class="p-3 font-black text-center w-8">PJ</th>
+                                    <th class="p-3 font-black text-center w-10">DIF</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${eq.map((e,i) => `
-                                <tr class="border-b border-gray-50 last:border-0">
-                                    <td class="p-2 text-center font-bold text-gray-400">${i+1}</td>
-                                    <td class="p-2 font-black text-gray-700 truncate max-w-[100px]">${e.n}</td>
-                                    <td class="p-2 text-center font-black text-[11px]" style="color:var(--theme)">${e.pts}</td>
-                                    <td class="p-2 text-center font-bold text-gray-500">${e.pj}</td>
-                                    <td class="p-2 text-center font-bold text-gray-500">${e.dif>0?'+'+e.dif:e.dif}</td>
+                                <tr class="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+                                    <td class="p-3 text-center font-bold text-slate-400">${i+1}</td>
+                                    <td class="p-3 font-black text-slate-700 truncate max-w-[120px] flex items-center gap-2"><span>${getFlag(e.n)}</span> ${e.n}</td>
+                                    <td class="p-3 text-center font-black text-sm" style="color:var(--theme)">${e.pts}</td>
+                                    <td class="p-3 text-center font-bold text-slate-500">${e.pj}</td>
+                                    <td class="p-3 text-center font-bold text-slate-500">${e.dif>0?'+'+e.dif:e.dif}</td>
                                 </tr>`).join('')}
                             </tbody>
                         </table>
