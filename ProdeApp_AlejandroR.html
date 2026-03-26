@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#10B981">
+    <title>PRODE - AlejandroR</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2U4ZThmYyIgZD0iTTE4IDNoMVYySDVWM2gxYTIgMiAwIDAgMCAyIDJoNGEyIDIgMCAwIDAgMi0yWk02IDVhNCA0IDAgMCAxLTQtNHYxYTRhNCA0IDAgMCAwIDQgNEg2Wm0xMiAwYTQgNCAwIDAgMCA0LTRWMWE0IDQgMCAwIDEtNCA0aDJaTTEyIDE1YTUgNSAwIDEgMSAwLTEwIDUgNSAwIDAgMSAwIDEwWm0wLThhMyAzIDAgMSAwIDAgNiAzIDMgMCAwIDAgMC02Wm03IDEwaDF2Mkgydi0yaDFhMiAyIDAgMCAxIDItMmgxNGEyIDIgMCAwIDEgMiAyWk01IDE5YTUgNSAwIDAgMSAxMCAwSDEwYTUgNSAwIDAgMS01LTVaIi8+PC9zdmc+">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap');
+        :root { --theme: #10B981; }
+        body { font-family: 'Archivo', sans-serif; background: #f1f5f9; padding-bottom: 90px; }
+        .app-header { background: var(--theme); color: white; padding: 1.5rem; text-align: center; position: sticky; top: 0; z-index: 50; }
+        .tab-content { display: none; padding: 1rem; }
+        .tab-content.active { display: block; }
+        .btn-nav.active { color: var(--theme); }
+        .btn-pred { border: 2px solid #e2e8f0; padding: 0.75rem; border-radius: 1rem; flex: 1; font-weight: 900; font-size: 10px; color: #94a3b8; transition: all 0.2s; }
+        .btn-pred.selected { background: var(--theme); color: white; border-color: var(--theme); }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <h1 class="font-black italic uppercase text-xl">AlejandroR</h1>
+        <div id="status-bar" class="text-[9px] opacity-70">En vivo 🟢</div>
+    </header>
+
+    <div id="pwa-banner" class="hidden fixed bottom-24 left-4 right-4 z-[200] bg-slate-900 text-white p-4 rounded-2xl border-2 border-emerald-500 shadow-2xl flex items-center justify-between">
+        <p class="font-black text-xs uppercase italic">¡Instalá la App! ⚡</p>
+        <button onclick="installPWA()" class="bg-emerald-500 px-4 py-2 rounded-xl font-black text-[10px] uppercase">Instalar</button>
+    </div>
+
+    <main id="tab-votar" class="tab-content active">
+        <div class="bg-white p-4 rounded-2xl shadow-sm mb-4">
+            <label class="text-[10px] font-black text-gray-400 uppercase">Tu Nombre</label>
+            <input type="text" id="user_name" onkeyup="localStorage.setItem('prode_user',this.value.trim())" class="w-full font-bold border-b-2 border-gray-100 py-1 outline-none text-gray-800">
+        </div>
+        <div id="lista-votar"></div>
+    </main>
+
+    <main id="tab-ranking" class="tab-content">
+        <div id="tabla-ranking" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div>
+    </main>
+
+    <main id="tab-grupos" class="tab-content">
+        <div id="lista-grupos"></div>
+    </main>
+
+    <nav class="fixed bottom-0 w-full bg-white h-[75px] flex items-center justify-around border-t border-gray-100 z-50">
+        <button onclick="switchTab('votar',this)" class="btn-nav active flex flex-col items-center">
+            <span class="text-lg mb-1">📝</span><span class="text-[9px] font-black uppercase">Votar</span>
+        </button>
+        <button onclick="switchTab('ranking',this)" class="btn-nav flex flex-col items-center">
+            <span class="text-lg mb-1">🥇</span><span class="text-[9px] font-black uppercase">Ranking</span>
+        </button>
+        <button onclick="switchTab('grupos',this)" class="btn-nav flex flex-col items-center">
+            <span class="text-lg mb-1">📊</span><span class="text-[9px] font-black uppercase">Grupos</span>
+        </button>
+    </nav>
+
+    <script>
+        let defP=null;
+        window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); defP=e; document.getElementById('pwa-banner').classList.remove('hidden'); });
+        function installPWA() { if(defP) { defP.prompt(); defP=null; document.getElementById('pwa-banner').remove(); } }
+        
+        const API = "https://prode-mundial.emprendimientoweb.workers.dev";
+        const EMPRESA = "AlejandroR";
+        
+        document.getElementById('user_name').value = localStorage.getItem('prode_user') || '';
+        
+        function switchTab(id,btn) {
+            document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.btn-nav').forEach(b=>b.classList.remove('active'));
+            document.getElementById('tab-'+id).classList.add('active');
+            if(btn) btn.classList.add('active');
+        }
+
+        async function loadData() {
+            try {
+                const r = await fetch(API+"?empresa="+encodeURIComponent(EMPRESA));
+                const d = await r.json();
+                renderVotar(d.partidos);
+                renderRanking(d.ranking);
+                renderGrupos(d.partidos);
+            } catch(e){}
+        }
+
+        function renderVotar(ps) {
+            const c = document.getElementById('lista-votar');
+            const pending = ps.filter(p=>p.estado==='Pendiente');
+            c.innerHTML = pending.map(p=>{
+                const v = localStorage.getItem('voto_'+p.id);
+                return `
+                <div class="bg-white p-4 rounded-2xl shadow-sm mb-3">
+                    <div class="flex justify-between text-[9px] font-black text-gray-300 uppercase mb-2">
+                        <span>${p.fase} ${p.grupo}</span><span>${p.fecha_str} ${p.hora_arg}</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-4 px-2">
+                        <span class="flex-1 text-center font-bold text-gray-700 text-xs">${p.local}</span>
+                        <span class="mx-2 text-[8px] font-black text-gray-200 uppercase">VS</span>
+                        <span class="flex-1 text-center font-bold text-gray-700 text-xs">${p.visitante}</span>
+                    </div>
+                    <div class="flex gap-2">
+                        ${['Local','Empate','Visitante'].map(o=>`<button onclick="votar(${p.id},'${o}',this)" class="btn-pred ${v===o?'selected':''}">${o}</button>`).join('')}
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderRanking(rk) {
+            const c = document.getElementById('tabla-ranking');
+            c.innerHTML = rk.map((r,i)=>`
+            <div class="flex items-center p-4 border-b border-gray-50">
+                <span class="w-8 font-black text-gray-300 italic text-sm">#${i+1}</span>
+                <span class="flex-1 font-bold text-gray-700 text-sm">${r.nombre}</span>
+                <span class="font-black" style="color:var(--theme)">${r.puntos} pts</span>
+            </div>`).join('');
+        }
+
+        function renderGrupos(ps) {
+            const c = document.getElementById('lista-grupos');
+            if(!ps || !ps.length) { c.innerHTML = ''; return; }
+            const st = {};
+            
+            ps.forEach(p => {
+                if(!p.grupo) return;
+                const g = p.grupo;
+                if(!st[g]) st[g] = {};
+                if(!st[g][p.local]) st[g][p.local] = { n: p.local, pts: 0, pj: 0, gf: 0, gc: 0 };
+                if(!st[g][p.visitante]) st[g][p.visitante] = { n: p.visitante, pts: 0, pj: 0, gf: 0, gc: 0 };
+                
+                if(p.gol_local !== null && p.gol_local !== '' && p.gol_visitante !== null && p.gol_visitante !== '') {
+                    const gl = parseInt(p.gol_local);
+                    const gv = parseInt(p.gol_visitante);
+                    st[g][p.local].pj++;
+                    st[g][p.visitante].pj++;
+                    st[g][p.local].gf += gl;
+                    st[g][p.local].gc += gv;
+                    st[g][p.visitante].gf += gv;
+                    st[g][p.visitante].gc += gl;
+                    
+                    if(gl > gv) st[g][p.local].pts += 3;
+                    else if(gl < gv) st[g][p.visitante].pts += 3;
+                    else { st[g][p.local].pts += 1; st[g][p.visitante].pts += 1; }
+                }
+            });
+            
+            let h = '';
+            Object.keys(st).sort().forEach(g => {
+                const eq = Object.values(st[g]);
+                eq.forEach(e => e.dif = e.gf - e.gc);
+                eq.sort((a,b) => {
+                    if(b.pts !== a.pts) return b.pts - a.pts;
+                    if(b.dif !== a.dif) return b.dif - a.dif;
+                    return b.gf - a.gf;
+                });
+                
+                h += `<div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-5 overflow-hidden">
+                        <div class="bg-slate-800 text-white p-2 text-center font-black text-[11px] uppercase tracking-widest">${g}</div>
+                        <table class="w-full text-left text-[10px]">
+                            <thead class="bg-gray-50 text-gray-400 border-b border-gray-100">
+                                <tr>
+                                    <th class="p-2 font-black w-6 text-center">#</th>
+                                    <th class="p-2 font-black">Equipo</th>
+                                    <th class="p-2 font-black text-center w-8">PTS</th>
+                                    <th class="p-2 font-black text-center w-6">PJ</th>
+                                    <th class="p-2 font-black text-center w-8">DIF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${eq.map((e,i) => `
+                                <tr class="border-b border-gray-50 last:border-0">
+                                    <td class="p-2 text-center font-bold text-gray-400">${i+1}</td>
+                                    <td class="p-2 font-black text-gray-700 truncate max-w-[100px]">${e.n}</td>
+                                    <td class="p-2 text-center font-black text-[11px]" style="color:var(--theme)">${e.pts}</td>
+                                    <td class="p-2 text-center font-bold text-gray-500">${e.pj}</td>
+                                    <td class="p-2 text-center font-bold text-gray-500">${e.dif>0?'+'+e.dif:e.dif}</td>
+                                </tr>`).join('')}
+                            </tbody>
+                        </table>
+                      </div>`;
+            });
+            c.innerHTML = h;
+        }
+
+        async function votar(id,pred,btn) {
+            const u = document.getElementById('user_name').value.trim();
+            if(!u){ alert("¡Escribí tu nombre primero!"); return; }
+            btn.innerText = '⏳';
+            try {
+                const r = await fetch(API, { method:'POST', body:JSON.stringify({empresa:EMPRESA, usuario:u, id_partido:id, prediccion:pred}) });
+                const d = await r.json();
+                if(d.ok) {
+                    localStorage.setItem('voto_'+id, pred);
+                    btn.innerText = '✅';
+                    loadData();
+                } else {
+                    alert(d.error);
+                    btn.innerText = pred;
+                }
+            } catch(e) { btn.innerText = pred; }
+        }
+
+        loadData();
+        setInterval(loadData, 45000);
+    </script>
+</body>
+</html>
