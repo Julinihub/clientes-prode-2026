@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Pedido Listo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: white; font-family: system-ui, sans-serif; padding-bottom: 90px; }
+        .tab-content { display: none; padding: 1.5rem; }
+        .tab-content.active { display: block; }
+        .btn-nav.active { color: #34d399; }
+    </style>
+</head>
+<body class="max-w-lg mx-auto">
+    <header class="p-6 border-b border-slate-800 flex justify-between items-center">
+        <h1 class="text-xl font-black text-emerald-400 italic uppercase tracking-tighter">🛡️ ADMIN: Pedido Listo</h1>
+        <button onclick="load()" class="bg-slate-800 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase">Refrescar 🟢</button>
+    </header>
+
+    <main id="tab-stats" class="tab-content active">
+        <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
+            <h2 class="text-xs font-black text-slate-500 uppercase mb-5 tracking-widest">Ranking General</h2>
+            <div id="ranking" class="space-y-3"></div>
+        </div>
+    </main>
+
+    <main id="tab-jugadores" class="tab-content">
+        <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
+            <h2 class="text-xs font-black text-slate-500 uppercase mb-5 tracking-widest">Control de Activación</h2>
+            <p class="text-[10px] text-slate-400 mb-6 italic">Habilitá a los jugadores que ya te abonaron la inscripción.</p>
+            <div id="lista-jugadores" class="space-y-4"></div>
+        </div>
+    </main>
+
+    <main id="tab-config" class="tab-content">
+        <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl text-center">
+            <h2 class="text-xs font-black text-slate-500 uppercase mb-4">Link de Jugadores</h2>
+            <p id="player_link" class="bg-slate-900 p-3 rounded-xl text-xs font-mono text-emerald-400 break-all mb-4"></p>
+            <button onclick="copiarLink()" class="w-full bg-emerald-600 text-white font-black py-4 rounded-xl uppercase text-xs">Copiar Link para Clientes</button>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 w-full bg-slate-900 h-[75px] flex items-center justify-around border-t border-slate-800 z-50">
+        <button onclick="switchTab('stats',this)" class="btn-nav active flex flex-col items-center">
+            <span class="text-xl">📊</span><span class="text-[9px] font-black uppercase">Stats</span>
+        </button>
+        <button onclick="switchTab('jugadores',this)" class="btn-nav flex flex-col items-center">
+            <span class="text-xl">👥</span><span class="text-[9px] font-black uppercase">Activar</span>
+        </button>
+        <button onclick="switchTab('config',this)" class="btn-nav flex flex-col items-center">
+            <span class="text-xl">⚙️</span><span class="text-[9px] font-black uppercase">Config</span>
+        </button>
+    </nav>
+
+    <script>
+        const API = "https://prode-mundial.emprendimientoweb.workers.dev";
+        const EMPRESA = "Pedido Listo";
+        const TOKEN = "PRODE2026_SECURE_KEY_123";
+
+        const pLink = window.location.href.replace('Admin_', 'ProdeApp_');
+        document.getElementById('player_link').innerText = pLink;
+
+        function switchTab(id,btn) {
+            document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.btn-nav').forEach(b=>b.classList.remove('active'));
+            document.getElementById('tab-'+id).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        async function activar(nombre) {
+            const r = await fetch(API, { method:'POST', body:JSON.stringify({empresa:EMPRESA, usuario:nombre, id_partido:0, prediccion:'Activado'}) });
+            const d = await r.json();
+            if(d.ok) { alert(`¡${nombre} activado correctamente!`); load(); }
+        }
+
+        async function load() {
+            try {
+                const r = await fetch(`${API}?accion=admin_view&empresa=${encodeURIComponent(EMPRESA)}&token=${TOKEN}`);
+                const d = await r.json();
+                
+                document.getElementById('ranking').innerHTML = d.ranking.map((u,i)=>`
+                <div class="flex justify-between p-3 bg-slate-900 rounded-xl border border-slate-700">
+                    <span class="font-bold text-sm text-slate-300">#${i+1} ${u.nombre}</span>
+                    <span class="font-black text-emerald-400">${u.puntos} pts</span>
+                </div>`).join('');
+
+                document.getElementById('lista-jugadores').innerHTML = d.usuarios.map(u=>`
+                <div class="flex justify-between items-center bg-slate-900 p-4 rounded-xl border border-slate-700">
+                    <span class="font-bold text-sm">${u.nombre}</span>
+                    <button onclick="activar('${u.nombre}')" class="bg-emerald-600 text-[10px] font-black px-4 py-2 rounded-lg uppercase shadow-lg">Habilitar</button>
+                </div>`).join('');
+            } catch(e){}
+        }
+
+        function copiarLink() { navigator.clipboard.writeText(pLink); alert("Link copiado"); }
+
+        load();
+        setInterval(load, 60000);
+    </script>
+</body>
+</html>
