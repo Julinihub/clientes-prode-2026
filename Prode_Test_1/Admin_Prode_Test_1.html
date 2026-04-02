@@ -1,1 +1,58 @@
-<!-- AQUÍ VA EL CÓDIGO DEL ADMIN -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Admin - Prode Test 1</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background: #0f172a; color: white; font-family: system-ui, sans-serif; }
+        .theme-bg { background-color: #F97316; }
+        .card { background: rgba(30,41,59,0.8); border-radius: 1.5rem; backdrop-filter: blur(8px); }
+    </style>
+</head>
+<body class="p-4">
+
+<!-- Pantalla de PIN (si se configuró) -->
+<div id="pin-screen" style="display:none;">
+    <div class="card p-8 w-full max-w-sm text-center">
+        <h2 class="text-2xl font-black mb-4">🔒 PIN de Admin</h2>
+        <input type="password" id="pin-input" maxlength="4" class="w-full p-3 rounded-xl bg-slate-800 text-white text-center text-2xl tracking-widest" placeholder="****">
+        <button id="btn-validar-pin" class="mt-4 bg-emerald-600 w-full py-3 rounded-xl font-bold">Ingresar</button>
+        <div id="pin-error" class="text-red-400 text-sm mt-2 hidden">PIN incorrecto</div>
+    </div>
+</div>
+
+<!-- App principal (oculta al inicio) -->
+<div id="main-app" style="display:block" class="max-w-4xl mx-auto space-y-6">
+    <div class="flex justify-between items-center flex-wrap gap-2">
+        <h1 class="text-2xl font-black">Prode Test 1 - Panel Admin</h1>
+        <div class="flex gap-2">
+            <button id="btn-soporte" class="bg-slate-700 px-4 py-2 rounded-xl text-sm">📞 Soporte</button>
+            <button id="btn-refresh" class="bg-emerald-600 px-4 py-2 rounded-xl text-sm">⟳ Actualizar</button>
+        </div>
+    </div>
+
+    <!-- Resumen rápido -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="card p-4 text-center"><span class="text-3xl font-black" id="total-jugadores">0</span><br>Jugadores</div>
+        <div class="card p-4 text-center"><span class="text-3xl font-black" id="total-entradas">0</span><br>Entradas</div>
+        <div class="card p-4 text-center"><span class="text-3xl font-black" id="top-puntaje">0</span><br>Puntaje máximo</div>
+    </div>
+
+    <!-- Tabla de posiciones -->
+    <div class="card p-4 overflow-auto">
+        <h2 class="text-xl font-bold mb-2">🏅 Tabla de posiciones</h2>
+        <table class="w-full text-sm">
+            <thead class="border-b border-slate-700">
+                <tr><th>#</th><th>Nombre</th><th>Teléfono</th><th>Entrada</th><th>Puntaje</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tabla-body"></tbody>
+        </table>
+    </div>
+
+    <!-- Edición de premios -->
+    <div class="card p-4">
+        <h2 class="text-xl font-bold mb-2">🎁 Editar Premios</h2>
+        <textarea id="premios-editor" rows="4" class="w-full p-3 rounded-xl bg-slate-800 border border-slate-700">¡Consultá en el local por los increíbles premios de este Mundial! 🏆
