@@ -250,7 +250,7 @@ var isFirstLoad = true;
 var _lastRanking = [];
 
 (function(){
-    var defaultHtml = "¡Consultá en el local por los increíbles premios de este Mundial! 🏆";
+    var defaultHtml = "¡Consultá en el local por los increíbles premios! 🏆";
     var cont = document.getElementById('premios-container');
     function renderPremios(html){
         var lineas = html.split('<br>').map(function(l){return l.trim();}).filter(Boolean);
@@ -313,11 +313,11 @@ async function solicitarActivacion(){
     }catch(e){btn.disabled=false;btn.innerText='REINTENTAR';}
 }
 
-// 🔥 FIX CRÍTICO 2: Ahora checkStatus no se detiene si no hay nombre. Ejecuta todo y libera el Splash Screen.
 async function checkStatus(){
     var n=obtenerNombreCompleto();
     try{
-        var r=await fetch(API+'?empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN_PUB);
+        // 🚀 AQUÍ ESTÁ EL ROMPE-CACHÉ PARA EL JUGADOR 🚀
+        var r=await fetch(API+'?empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN_PUB+'&nocache='+Date.now());
         var d=await r.json();
         _lastRanking=d.ranking||[];
         
