@@ -244,7 +244,7 @@ var API        = "https://prode-mundial.emprendimientoweb.workers.dev";
 var TOKEN_PUB  = "PRODE2026_PUBLIC_KEY_M26";
 var EMPRESA    = "Guru";
 var WA_ADMIN   = "5493541598575";
-var LINK_APP   = "https://clientes-prode-2026.emprendimientoweb.workers.dev/Guru/ProdeApp_Guru.html";
+var LINK_APP   = "https://clientes-prode-2026.emprendimientoweb.workers.dev/Guru/ProdeApp_Guru.html?empresa=Guru&token=PRODE2026_PUBLIC_KEY_M26";
 var CONFIG_RAW = "https://raw.githubusercontent.com/Julinihub/clientes-prode-2026/main/Guru/config_Guru.json";
 var isFirstLoad = true;
 var _lastRanking = [];
@@ -316,7 +316,6 @@ async function solicitarActivacion(){
 async function checkStatus(){
     var n=obtenerNombreCompleto();
     try{
-        // 🚀 AQUÍ ESTÁ EL ROMPE-CACHÉ PARA EL JUGADOR 🚀
         var r=await fetch(API+'?empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN_PUB+'&nocache='+Date.now());
         var d=await r.json();
         _lastRanking=d.ranking||[];
