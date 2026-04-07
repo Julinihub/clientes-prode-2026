@@ -330,7 +330,8 @@ async function solicitarActivacion(){
 async function checkStatus(){
     var n=obtenerNombreCompleto();if(!n)return;
     try{
-        var r=await fetch(API+'?empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN_PUB);
+        // DESTROY CACHE AÑADIDO ACÁ
+        var r=await fetch(API+'?empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN_PUB+'&_t='+Date.now(), {cache: 'no-store'});
         var d=await r.json();
         _lastRanking=d.ranking||[];
         var user=d.ranking.find(function(u){return u.nombre.toLowerCase()===n.toLowerCase();});
