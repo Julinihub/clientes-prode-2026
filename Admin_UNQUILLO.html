@@ -12,8 +12,6 @@
         .tab-content.active { display:block; }
         .btn-nav { color:#475569; }
         .btn-nav.active { color:#34d399; }
-        .pin-digit { width:52px; height:64px; background:#1e293b; border:2px solid #334155; border-radius:1rem; font-size:28px; font-weight:900; text-align:center; color:white; outline:none; transition:all 0.2s; }
-        .pin-digit:focus { border-color:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,0.2); }
         textarea.admin-ta { background:#1e293b; border:1px solid #334155; color:white; border-radius:1rem; padding:1rem; width:100%; font-family:'Archivo',sans-serif; font-size:13px; font-weight:600; resize:vertical; min-height:120px; outline:none; transition:border-color 0.2s; }
         textarea.admin-ta:focus { border-color:#10b981; }
         .btn-sm { font-size:11px; font-weight:900; padding:6px 14px; border-radius:8px; cursor:pointer; transition:all 0.2s; }
@@ -30,26 +28,7 @@
 </head>
 <body class="max-w-lg mx-auto">
 
-<div id="pin-screen" class="min-h-screen flex flex-col items-center justify-center p-8">
-    <div class="text-center mb-10">
-        <span style="font-size:4rem;">🛡️</span>
-        <h1 class="text-2xl font-black italic uppercase text-white mt-4">Panel Admin</h1>
-        <p class="text-slate-400 text-sm mt-2 font-bold">UNQUILLO</p>
-    </div>
-    <div class="bg-slate-800 p-8 rounded-[2rem] border border-slate-700 w-full max-w-sm">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 text-center">Ingresá el PIN de acceso</p>
-        <div class="flex justify-center gap-3 mb-6">
-            <input type="password" inputmode="numeric" class="pin-digit" id="p1" maxlength="1" oninput="avanzarPin(this,'p2')" onkeydown="retrocederPin(event,this,'')">
-            <input type="password" inputmode="numeric" class="pin-digit" id="p2" maxlength="1" oninput="avanzarPin(this,'p3')" onkeydown="retrocederPin(event,this,'p1')">
-            <input type="password" inputmode="numeric" class="pin-digit" id="p3" maxlength="1" oninput="avanzarPin(this,'p4')" onkeydown="retrocederPin(event,this,'p2')">
-            <input type="password" inputmode="numeric" class="pin-digit" id="p4" maxlength="1" oninput="verificarPin()"        onkeydown="retrocederPin(event,this,'p3')">
-        </div>
-        <div id="pin-error" class="hidden text-center text-red-400 text-xs font-black uppercase mb-4">PIN incorrecto, intentá de nuevo</div>
-        <button onclick="verificarPin()" class="w-full btn-green btn-sm py-3 rounded-xl text-sm uppercase">Entrar</button>
-    </div>
-</div>
-
-<div id="main-app" style="display:none">
+<div id="main-app">
 
     <header class="p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 bg-slate-900 z-50">
         <div>
