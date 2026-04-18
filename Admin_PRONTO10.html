@@ -7,102 +7,85 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap');
-        body { background:#0f172a; color:white; font-family:'Archivo',sans-serif; }
+        body { background:#0f172a; color:white; padding-bottom:90px; font-family:'Archivo',sans-serif; }
         .tab-content { display:none; padding:1.5rem; }
         .tab-content.active { display:block; }
-        .player-row { display:flex; justify-content:space-between; items-center:center; padding:12px 0; border-bottom:1px solid #1e293b; }
-        .btn-green { background:#10b981; color:white; padding:6px 12px; border-radius:8px; font-weight:900; font-size:11px; }
+        .btn-nav { color:#475569; }
+        .btn-nav.active { color:#34d399; }
+        textarea.admin-ta { background:#1e293b; border:1px solid #334155; color:white; border-radius:1rem; padding:1rem; width:100%; font-family:'Archivo',sans-serif; font-size:13px; font-weight:600; resize:vertical; min-height:120px; outline:none; transition:border-color 0.2s; }
+        textarea.admin-ta:focus { border-color:#10b981; }
+        .btn-sm { font-size:11px; font-weight:900; padding:6px 14px; border-radius:8px; cursor:pointer; transition:all 0.2s; }
+        .btn-green { background:#10b981; color:white; }
+        .btn-green:hover { background:#059669; }
+        .btn-green:disabled { opacity:0.6; cursor:not-allowed; }
+        .btn-red { background:rgba(239,68,68,0.15); color:#f87171; border:1px solid rgba(239,68,68,0.3); }
+        .btn-red:hover { background:rgba(239,68,68,0.3); }
+        .btn-slate { background:#334155; color:#94a3b8; }
+        .btn-slate:hover { background:#475569; color:white; }
+        .player-row { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:10px 0; border-bottom:1px solid #1e293b; }
+        .player-row:last-child { border-bottom:none; }
     </style>
 </head>
-<body>
+<body class="max-w-lg mx-auto">
 
 
 
 <div id="main-app" class="block">
-    <header class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900 sticky top-0 z-50">
+
+    <header class="p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 bg-slate-900 z-50">
         <div>
-            <h1 class="text-emerald-400 font-black italic uppercase">🛡️ Admin</h1>
+            <h1 class="text-lg font-black text-emerald-400 italic uppercase leading-none">🛡️ Admin</h1>
             <p class="text-[10px] text-slate-500 font-bold uppercase">PRONTO10</p>
         </div>
-        <button onclick="load()" class="bg-emerald-600 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase">Refrescar 🟢</button>
+        <div class="flex gap-2">
+            <button onclick="restaurarOcultos()" class="text-[9px] bg-slate-700 px-2 py-1.5 rounded-lg uppercase font-bold text-slate-300">♻️ Ocultos</button>
+            <button onclick="load()" class="text-[9px] bg-emerald-600 px-3 py-1.5 rounded-lg uppercase font-bold text-white shadow-lg shadow-emerald-500/20">Refrescar 🟢</button>
+        </div>
     </header>
 
     <main id="tab-jugadores" class="tab-content active">
-        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700">
-            <h2 class="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-4">⏳ Esperando Activación</h2>
-            <div id="lista-pendientes"></div>
-            <hr class="my-6 border-slate-700">
-            <h2 class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-4">✅ Jugadores Activos</h2>
-            <div id="lista-activos"></div>
+        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700 shadow-xl space-y-5">
+
+            <div>
+                <h2 class="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-3">⏳ Esperando Activación</h2>
+                <div id="lista-pendientes"></div>
+            </div>
+
+            <hr class="border-slate-700">
+
+            <div>
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">✅ Jugadores Habilitados</h2>
+                    <span id="contador-activos" class="text-[10px] font-black text-slate-500"></span>
+                </div>
+                <div id="lista-activos"></div>
+            </div>
         </div>
     </main>
 
-    <nav class="fixed bottom-0 w-full bg-slate-900 h-[70px] flex items-center justify-around border-t border-slate-800">
-        <button class="text-[10px] font-black uppercase text-emerald-400">👥 Jugadores</button>
-    </nav>
-</div>
+    <main id="tab-stats" class="tab-content">
+        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700 mb-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Ranking Completo</h2>
+                <button onclick="descargarCSV()" class="btn-sm btn-slate rounded-lg">⬇️ Exportar CSV</button>
+            </div>
+            <div id="ranking" class="space-y-2"></div>
+        </div>
+        <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl">
+            <p class="text-[10px] text-slate-500 font-black uppercase tracking-wide mb-1">📊 Sistema de Puntos</p>
+            <p class="text-[10px] text-slate-400 leading-relaxed">
+                <strong class="text-emerald-400">3 pts</strong> — Acertás el resultado (Local / Empate / Visitante) ·
+                <strong class="text-slate-500">0 pts</strong> — Resultado incorrecto
+            </p>
+        </div>
+    </main>
 
-<script>
-var API = "https://prode-mundial.emprendimientoweb.workers.dev", EMPRESA = "PRONTO10", TOKEN = "ProdeAdmin2026Julio", PIN = "";
-
-function avanzarPin(el, n) { if(el.value.length===1) document.getElementById(n).focus(); }
-function verificarPin() {
-    var p = ['p1','p2','p3','p4'].map(id=>document.getElementById(id).value).join('');
-    if(p===PIN) { sessionStorage.setItem('auth_'+EMPRESA,'1'); mostrarApp(); }
-    else { alert('PIN Incorrecto'); ['p1','p2','p3','p4'].forEach(id=>document.getElementById(id).value=''); }
-}
-function mostrarApp() {
-    if(document.getElementById('pin-screen')) document.getElementById('pin-screen').classList.add('hidden');
-    document.getElementById('main-app').classList.remove('hidden');
-    document.getElementById('main-app').classList.add('block');
-    load();
-}
-if(!PIN || sessionStorage.getItem('auth_'+EMPRESA)) mostrarApp();
-
-async function load() {
-    try {
-        const r = await fetch(API+'?accion=admin_view&empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN+'&_t='+Date.now());
-        const d = await r.json();
-        
-        let pend = [], act = [], pendNames = [];
-
-        // EL SÚPER ESCÁNER UNIVERSAL: Busca en todas las cajas posibles (solicitudes, usuarios y ranking)
-        let totalRaw = [];
-        if(d.solicitudes_pendientes) totalRaw = totalRaw.concat(d.solicitudes_pendientes);
-        if(d.usuarios) totalRaw = totalRaw.concat(d.usuarios);
-        if(d.ranking) totalRaw = totalRaw.concat(d.ranking);
-
-        totalRaw.forEach(u => {
-            if(!u || !u.nombre) return;
-            let n = u.nombre.trim();
-            if(pendNames.includes(n)) return;
-
-            let esPendiente = JSON.stringify(u).toUpperCase().includes('PENDIENTE');
-            if(esPendiente) {
-                pend.push(u);
-                pendNames.push(n);
-            } else {
-                act.push(u);
-            }
-        });
-
-        document.getElementById('lista-pendientes').innerHTML = pend.map(u => `
-            <div class="player-row">
-                <span class="text-sm font-bold">${u.nombre}</span>
-                <button onclick="activar('${u.nombre}')" class="btn-green">Activar</button>
-            </div>`).join('') || '<p class="text-xs text-slate-500 italic text-center">Sin solicitudes nuevas</p>';
-
-        document.getElementById('lista-activos').innerHTML = act.map(u => `
-            <div class="player-row"><span class="text-sm text-slate-400">${u.nombre}</span></div>`).join('');
-
-    } catch(e) { console.error(e); }
-}
-
-async function activar(n) {
-    if(!confirm('¿Activar a '+n+'?')) return;
-    await fetch(API,{method:'POST',body:JSON.stringify({empresa:EMPRESA,usuario:n,id_partido:0,prediccion:'ACTIVADO',token:TOKEN})});
-    load();
-}
-</script>
-</body>
-</html>
+    <main id="tab-premios" class="tab-content">
+        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">🎁 Configurar Premios</h2>
+            <p class="text-[10px] text-slate-500 mb-4 leading-relaxed">
+                Escribí los premios (uno por línea). Al guardar, los jugadores verán los cambios en 1-2 minutos <strong class="text-emerald-400">sin necesidad de regenerar la app</strong>.
+            </p>
+            <textarea class="admin-ta" id="premios-editor" placeholder="🥇 1er Puesto: Un costillar
+🥈 2do Puesto: 2 docenas de empanadas
+🥉 3er Puesto: Pack de cervezas">
