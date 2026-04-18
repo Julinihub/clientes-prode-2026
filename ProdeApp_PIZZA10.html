@@ -1,0 +1,899 @@
+sibility:hidden;position:absolute;width:0;height:0;overflow:hidden;">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#10B981">
+    <title>PRODE - PIZZA10</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWUyOTNiIi8+PHBhdGggZmlsbD0iI0ZCQkYyNCIgZD0iTTUwLDE1IEwzNSwxNSBDMjgsMTUgMjUsMjAgMjUsMzAgTDI1LDUwIEMyNSw2NSA0MCw3NSA1MCw3NSBDNjAsNzUgNzUsNjUgNzUsNTAgTDc1LDMwIEM3NSwyMCA3MiwxNSA2NSwxNSBMNTAsMTUgWiIgLz48cGF0aCBmaWxsPSIjRkJCRjI0IiBkPSJNMjUsMjUgSDIwIEMxNSwyNSAxNSwzNSAyMCw0MCBIMjUgVjI1IFoiIC8+PHBhdGggZmlsbD0iI2RiYTgzMiIgZD0iTTI1LDMwIEwyNSwyMCBDMjUsMTUgMjgsMTUgMzUsMTUgTDUwLDE1IFoiIC8+PHBhdGggZmlsbD0iI0ZCQkYyNCIgZD0iTTc1LDI1IEg4MCBDODUsMjUgODUsMzUgODAsNDAgSDc1IFYyNSBaIiAvPjxwYXRoIGZpbGw9IiNkYmE4MzIiIGQ9Ik03NSwzMCBMNzUsMjAgQzc1LDE1IDcyLDE1IDY1LDE1IEw1MCwxNSBaIiAvPjxwYXRoIGZpbGw9IiNGQkJGMjQiIGQ9Ik01MCw3NSBMNDAsNzUgTDMwLDkwIEg3MCBMNjAsNzUgWiIgLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjMwIiByPSIxMCIgZmlsbD0iI3dmZiIgLz48cGF0aCBmaWxsPSIjMWUyOTNiIiBkPSJNNTAsMjAgTDUzLDI0IEw1OCwyNCBMNTUsMjcgTDU3LDMyIEw1MCwzMCBMNDMsMzIgTDQ1LDI3IEw0MiwyNCBMNDcsMjQgWiIgLz48L3N2Zz4=">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    // Manifest dinámico para PWA
+    (function(){
+        var m={name:'Prode PIZZA10',short_name:'Prode PIZZA10',
+            start_url:window.location.href,display:'standalone',
+            orientation:'portrait',background_color:'#f1f5f9',theme_color:'#10B981',
+            icons:[{src:'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMWUyOTNiIi8+PHBhdGggZmlsbD0iI0ZCQkYyNCIgZD0iTTUwLDE1IEwzNSwxNSBDMjgsMTUgMjUsMjAgMjUsMzAgTDI1LDUwIEMyNSw2NSA0MCw3NSA1MCw3NSBDNjAsNzUgNzUsNjUgNzUsNTAgTDc1LDMwIEM3NSwyMCA3MiwxNSA2NSwxNSBMNTAsMTUgWiIgLz48cGF0aCBmaWxsPSIjRkJCRjI0IiBkPSJNMjUsMjUgSDIwIEMxNSwyNSAxNSwzNSAyMCw0MCBIMjUgVjI1IFoiIC8+PHBhdGggZmlsbD0iI2RiYTgzMiIgZD0iTTI1LDMwIEwyNSwyMCBDMjUsMTUgMjgsMTUgMzUsMTUgTDUwLDE1IFoiIC8+PHBhdGggZmlsbD0iI0ZCQkYyNCIgZD0iTTc1LDI1IEg4MCBDODUsMjUgODUsMzUgODAsNDAgSDc1IFYyNSBaIiAvPjxwYXRoIGZpbGw9IiNkYmE4MzIiIGQ9Ik03NSwzMCBMNzUsMjAgQzc1LDE1IDcyLDE1IDY1LDE1IEw1MCwxNSBaIiAvPjxwYXRoIGZpbGw9IiNGQkJGMjQiIGQ9Ik01MCw3NSBMNDAsNzUgTDMwLDkwIEg3MCBMNjAsNzUgWiIgLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjMwIiByPSIxMCIgZmlsbD0iI3dmZiIgLz48cGF0aCBmaWxsPSIjMWUyOTNiIiBkPSJNNTAsMjAgTDUzLDI0IEw1OCwyNCBMNTUsMjcgTDU3LDMyIEw1MCwzMCBMNDMsMzIgTDQ1LDI3IEw0MiwyNCBMNDcsMjQgWiIgLz48L3N2Zz4=',sizes:'any',type:'image/svg+xml'}]};
+        var b=new Blob([JSON.stringify(m)],{type:'application/manifest+json'});
+        var l=document.createElement('link');l.rel='manifest';l.href=URL.createObjectURL(b);
+        document.head.appendChild(l);
+    })();
+    // Service Worker mínimo para habilitar install prompt en Chrome
+    if('serviceWorker' in navigator){
+        var sw='self.addEventListener("fetch",function(e){});';
+        var b=new Blob([sw],{type:'application/javascript'});
+        navigator.serviceWorker.register(URL.createObjectURL(b)).catch(function(){});
+    }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap');
+        :root { --theme:#10B981; }
+        body { font-family:'Archivo',sans-serif; background:#f1f5f9; padding-bottom:90px; -webkit-tap-highlight-color:transparent; }
+        .app-header { background:var(--theme); color:white; padding:1rem 1.2rem; position:sticky; top:0; z-index:50; }
+        .tab-content { display:none; padding:1rem; }
+        .tab-content.active { display:block; animation:fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+        .btn-nav { color:#94a3b8; background:none; border:none; display:flex; flex-direction:column; align-items:center; padding:4px 8px; cursor:pointer; }
+        .btn-nav.active { color:var(--theme); }
+        .btn-pred { border:2px solid #e2e8f0; padding:0.75rem; border-radius:1rem; flex:1; font-weight:900; font-size:11px; color:#94a3b8; transition:all 0.2s; cursor:pointer; background:white; }
+        .btn-pred.selected { background:var(--theme); color:white; border-color:var(--theme); }
+        .btn-pred:disabled { opacity:0.5; cursor:not-allowed; }
+        #splash { background:var(--theme); }
+        .entrada-select { background:white; border:2px solid #e2e8f0; border-radius:0.75rem; padding:0.5rem 0.75rem; font-family:'Archivo',sans-serif; font-weight:900; font-size:13px; color:#334155; outline:none; cursor:pointer; width:100%; margin-top:6px; }
+        .entrada-select:focus { border-color:var(--theme); }
+        .vote-hint { font-size:10px; color:#94a3b8; text-align:center; margin-top:6px; font-style:italic; }
+        .premio-item { padding:12px 0; border-bottom:1px solid #f1f5f9; font-weight:700; color:#334155; font-size:15px; }
+        .premio-item:last-child { border-bottom:none; }
+        .hist-card { background:white; border-radius:1.25rem; padding:14px 16px; margin-bottom:10px; border:1px solid #f1f5f9; }
+        .hist-equipos { display:flex; justify-content:space-between; align-items:center; font-weight:900; font-size:13px; color:#334155; margin-bottom:8px; }
+        .hist-resultado { font-size:11px; color:#64748b; font-weight:700; }
+        .hist-voto { display:flex; align-items:center; gap:6px; font-size:11px; font-weight:900; margin-top:6px; }
+        .badge-ok  { background:#d1fae5; color:#065f46; padding:3px 10px; border-radius:999px; font-size:10px; font-weight:900; }
+        .badge-err { background:#fee2e2; color:#991b1b; padding:3px 10px; border-radius:999px; font-size:10px; font-weight:900; }
+        .badge-pen { background:#f1f5f9; color:#94a3b8; padding:3px 10px; border-radius:999px; font-size:10px; font-weight:900; }
+        .section-title { font-size:10px; font-weight:900; color:#94a3b8; text-transform:uppercase; letter-spacing:0.08em; margin:16px 0 8px; padding-left:4px; }
+        .ranking-own { background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(5,150,105,0.04)); border-left:3px solid var(--theme); }
+        .btn-compartir { width:100%; background:var(--theme); color:white; font-weight:900; font-size:13px; padding:14px; border-radius:1rem; border:none; cursor:pointer; margin-bottom:16px; display:flex; align-items:center; justify-content:center; gap:8px; }
+        .btn-compartir:active { opacity:0.85; }
+        .ayuda-card { background:white; border-radius:1.25rem; padding:20px; margin-bottom:12px; border:1px solid #f1f5f9; }
+        .ayuda-title { font-size:13px; font-weight:900; color:#0f172a; margin-bottom:10px; }
+        .ayuda-row { display:flex; align-items:flex-start; gap:10px; padding:6px 0; border-bottom:1px solid #f8fafc; font-size:13px; color:#475569; }
+        .ayuda-row:last-child { border-bottom:none; }
+        .ayuda-pts { font-weight:900; font-size:16px; min-width:28px; }
+        .ayuda-tc { font-size:11px; color:#94a3b8; line-height:1.6; }
+        @keyframes pulse-btn { 0%,100%{opacity:1} 50%{opacity:0.6} }
+        .retrying { animation:pulse-btn 1s ease-in-out infinite; }
+        .install-banner { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); z-index:100;
+            background:#0f172a; color:white; border:1px solid rgba(255,255,255,0.15);
+            border-radius:1rem; padding:10px 16px; display:none; align-items:center;
+            gap:10px; font-family:'Archivo',sans-serif; font-size:12px; font-weight:700;
+            box-shadow:0 8px 32px rgba(0,0,0,0.4); white-space:nowrap; cursor:pointer; }
+        .install-banner:active { opacity:0.85; }
+        .ios-banner { position:fixed; bottom:80px; left:12px; right:12px; z-index:100;
+            background:#0f172a; color:white; border:1px solid rgba(255,255,255,0.15);
+            border-radius:1rem; padding:14px 16px; display:none;
+            font-family:'Archivo',sans-serif; font-size:11px; line-height:1.6;
+            box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+        .ios-close { float:right; cursor:pointer; opacity:0.6; font-size:16px; line-height:1; }
+    </style>
+</head>
+<body>
+
+<div id="splash" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center transition-opacity duration-500">
+    <div class="text-7xl mb-6 animate-bounce">🏆</div>
+    <h1 class="text-white font-black text-2xl uppercase italic tracking-widest text-center px-4">PIZZA10</h1>
+    <div class="mt-8 border-4 border-white border-t-transparent rounded-full w-10 h-10 animate-spin opacity-80"></div>
+</div>
+
+<header class="app-header">
+    <div id="header-inner"></div>
+</header>
+<script>
+(function(){
+    var logo="",pos="center",hi=document.getElementById('header-inner');
+    var imgStyle='width:44px;height:44px;border-radius:50%;object-fit:cover;border:2.5px solid rgba(255,255,255,0.45);flex-shrink:0;';
+    if(logo&&logo.length>100){
+        if(pos==='left'){
+            hi.style.cssText='display:flex;align-items:center;gap:12px;padding:0 4px;';
+            hi.innerHTML='<img src="'+logo+'" style="'+imgStyle+'"><span style="font-weight:900;font-style:italic;text-transform:uppercase;font-size:1.1rem;">PIZZA10</span>';
+        } else {
+            hi.style.cssText='display:flex;flex-direction:column;align-items:center;gap:4px;';
+            hi.innerHTML='<img src="'+logo+'" style="'+imgStyle+'"><span style="font-weight:900;font-style:italic;text-transform:uppercase;font-size:0.85rem;">PIZZA10</span>';
+        }
+    } else {
+        hi.style.cssText='display:flex;align-items:center;justify-content:center;';
+        hi.innerHTML='<h1 style="font-weight:900;font-style:italic;text-transform:uppercase;font-size:1.1rem;">PIZZA10</h1>';
+    }
+})();
+</script>
+
+<!-- TAB: VOTAR + HISTORIAL -->
+<main id="tab-votar" class="tab-content active">
+    <div class="bg-white p-4 rounded-2xl shadow-sm mb-4 border border-gray-100">
+        <label class="text-[10px] font-black text-slate-400 uppercase tracking-wide">Tu Nombre Completo</label>
+        <input type="text" id="user_name" oninput="onNameInput(this.value)"
+            class="w-full font-black border-b-2 border-slate-100 py-2 outline-none text-slate-800 text-lg"
+            placeholder="Ingresá tu nombre...">
+        <div style="margin-top:12px;">
+            <label class="text-[10px] font-black text-slate-400 uppercase tracking-wide">Tu WhatsApp (Opcional)</label>
+            <input type="tel" id="user_wa" inputmode="numeric"
+                style="font-family:'Archivo',sans-serif;font-weight:700;font-size:13px;border:none;border-bottom:2px solid #f1f5f9;padding:8px 0;width:100%;outline:none;color:#475569;background:transparent;"
+                placeholder="Ej: 5493512345678 — para que el organizador te contacte">
+        </div>
+        <div id="entrada-wrap" style="display:block;margin-top:12px;">
+            <label class="text-[10px] font-black text-slate-400 uppercase tracking-wide">Número de Entrada</label>
+            <select id="nro_entrada" class="entrada-select" onchange="onEntradaChange()"><option value="1">Entrada #1</option><option value="2">Entrada #2</option><option value="3">Entrada #3</option></select>
+            <p style="font-size:10px;color:#94a3b8;margin-top:4px;font-style:italic;">Cada entrada es una boleta independiente.</p>
+        </div>
+    </div>
+
+    <div id="panel-bloqueo" class="bg-slate-900 text-white p-8 rounded-[2rem] text-center space-y-4 shadow-2xl">
+        <span class="text-5xl">🔒</span>
+        <h2 class="font-black text-xl uppercase italic">Falta Activación</h2>
+        <p class="text-xs text-slate-400">Ingresá tu nombre, elegí tu entrada y pedile al administrador que te habilite.</p>
+        <button onclick="solicitarActivacion()" id="btn_solicitar"
+            class="w-full bg-emerald-500 text-white font-black py-4 rounded-xl uppercase text-[10px] shadow-lg shadow-emerald-500/20">
+            Solicitar Activación
+        </button>
+    </div>
+
+    <!-- Partidos pendientes (votables) -->
+    <div id="lista-votar" class="hidden"></div>
+
+    <!-- Historial de partidos finalizados -->
+    <div id="lista-historial" class="hidden">
+        <p class="section-title">📋 Mis resultados anteriores</p>
+        <div id="historial-cards"></div>
+    </div>
+</main>
+
+<!-- TAB: RANKING -->
+<main id="tab-ranking" class="tab-content">
+    <div id="ranking-compartir-wrap" class="hidden">
+        <button class="btn-compartir" onclick="compartirRanking()">
+            <span>📤</span><span>Compartir mi posición</span>
+        </button>
+    </div>
+    <div id="tabla-ranking" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div>
+</main>
+
+<!-- TAB: PREMIOS -->
+<main id="tab-premios" class="tab-content">
+    <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-emerald-100">
+        <div class="text-center mb-6">
+            <span style="font-size:3.5rem;display:block;margin-bottom:0.5rem;">🎁</span>
+            <h2 class="font-black text-2xl text-slate-800 uppercase italic">¡Nuestros Premios!</h2>
+        </div>
+        <div id="premios-container"></div>
+        <hr style="border-color:rgba(16,185,129,0.2);margin:20px 0;">
+        <p class="text-center text-[10px] text-slate-400 font-black uppercase">Seguí sumando puntos para escalar en el ranking</p>
+    </div>
+</main>
+
+<!-- TAB: AYUDA -->
+<main id="tab-ayuda" class="tab-content">
+
+    <div class="ayuda-card">
+        <p class="ayuda-title">📊 Sistema de puntos</p>
+        <div class="ayuda-row">
+            <span class="ayuda-pts" style="color:#10b981;">3</span>
+            <span><strong>Acierto</strong> — acertás si gana el local, si empata o si gana el visitante. Son 3 puntos.</span>
+        </div>
+        <div class="ayuda-row">
+            <span class="ayuda-pts" style="color:#94a3b8;">0</span>
+            <span><strong>Error</strong> — elegiste el resultado equivocado. 0 puntos.</span>
+        </div>
+        <div class="ayuda-row" style="padding-top:10px;border-bottom:none;font-size:12px;color:#64748b;">
+            Para cada partido elegís una de estas tres opciones: <strong>Local</strong> (gana el equipo de casa), <strong>Empate</strong> o <strong>Visitante</strong> (gana el equipo de afuera).
+        </div>
+    </div>
+
+    <div class="ayuda-card">
+        <p class="ayuda-title">⚽ ¿Cómo funciona el Prode?</p>
+        <div class="ayuda-row"><span>1.</span><span>Ingresás tu nombre y solicitás activación al organizador.</span></div>
+        <div class="ayuda-row"><span>2.</span><span>Una vez habilitado, podés votar el resultado de cada partido antes de que empiece.</span></div>
+        <div class="ayuda-row"><span>3.</span><span>Podés cambiar tu voto tantas veces como quieras mientras el partido no haya comenzado.</span></div>
+        <div class="ayuda-row"><span>4.</span><span>Al terminar cada partido, los puntos se suman automáticamente al ranking.</span></div>
+        <div class="ayuda-row"><span>5.</span><span>Ganás si terminás primero en el ranking al final del torneo.</span></div>
+    </div>
+
+    <div class="ayuda-card" style="border-left:3px solid #10b981;">
+        <p class="ayuda-title">🟢 ¿Podés sumarte cuando el Mundial ya empezó?</p>
+        <p style="font-size:13px;color:#475569;line-height:1.7;">
+            ¡Sí! El sistema bloquea los votos partido por partido, no al inicio del torneo.
+            Si te sumás en la mitad, no podés votar los partidos que ya se jugaron,
+            pero sí todos los que faltan. Los que arrancaron desde el día uno tienen ventaja
+            en puntos, pero todavía hay mucho por jugar.
+        </p>
+    </div>
+
+    <div class="ayuda-card">
+        <p class="ayuda-title">📱 ¿Perdiste tu sesión o cambiaste de celular?</p>
+        <p style="font-size:13px;color:#475569;line-height:1.7;">
+            Ingresá exactamente el mismo nombre con el que te registraste y el sistema
+            te va a reconocer. Tus puntos no se pierden, están guardados en el servidor.
+            Si tenés dudas, contactá al organizador del Prode.
+        </p>
+    </div>
+
+    <div class="ayuda-card" style="background:#f8fafc;">
+        <p class="ayuda-title" style="color:#64748b;">🛡️ Bases y condiciones</p>
+        <p class="ayuda-tc">
+            Este es un concurso de habilidad y pronósticos con premios estrictamente promocionales,
+            organizado por <strong>PIZZA10</strong>. La aplicación es una herramienta tecnológica
+            provista por terceros. Los premios son responsabilidad exclusiva del comercio organizador.
+            La participación implica la aceptación de estas bases.
+        </p>
+    </div>
+
+</main>
+
+<!-- Botón instalar (Android) -->
+<button id="btn-instalar" class="install-banner" onclick="instalarApp()" style="display:none">
+    <span>📲</span><span>Instalar App</span>
+</button>
+<!-- Banner iOS -->
+<div id="ios-banner" class="ios-banner" style="display:none">
+    <span class="ios-close" onclick="this.parentElement.style.display='none'">✕</span>
+    <strong>📲 Instalar en iPhone:</strong><br>
+    Tocá el ícono <strong>compartir</strong> (cuadrado con flecha ↑) en Safari y luego
+    <strong>"Agregar a pantalla de inicio"</strong>.
+</div>
+
+<nav class="fixed bottom-0 w-full bg-white h-[75px] flex items-center justify-around border-t border-gray-200 z-50">
+    <button onclick="switchTab('votar',this)" class="btn-nav active">
+        <span class="text-xl mb-1">📝</span><span class="text-[9px] font-black uppercase">Votar</span>
+    </button>
+    <button onclick="switchTab('ranking',this)" class="btn-nav">
+        <span class="text-xl mb-1">🥇</span><span class="text-[9px] font-black uppercase">Ranking</span>
+    </button>
+    <button onclick="switchTab('premios',this)" class="btn-nav">
+        <span class="text-xl mb-1">🎁</span><span class="text-[9px] font-black uppercase">Premios</span>
+    </button>
+    <button onclick="switchTab('ayuda',this)" class="btn-nav">
+        <span class="text-xl mb-1">❓</span><span class="text-[9px] font-black uppercase">Ayuda</span>
+    </button>
+</nav>
+
+<script>
+var API        = "https://prode-mundial.emprendimientoweb.workers.dev";
+var TOKEN_PUB  = "ProdeJugador2026";
+var EMPRESA    = "PIZZA10";
+var WA_ADMIN   = "5493541598575";
+var LINK_APP   = "https://clientes-prode-2026.emprendimientoweb.workers.dev/ProdeApp_PIZZA10.html";
+var CONFIG_RAW = "https://raw.githubusercontent.com/Julinihub/clientes-prode-2026/main/config_PIZZA10.json";
+var isFirstLoad = true;
+var _lastRanking = [];
+
+// ── Premios dinámicos ────────────────────────────────────────
+(function(){
+    var defaultHtml = "¡Consultá en el local por los increíbles premios de este Mundial! 🏆";
+    var cont = document.getElementById('premios-container');
+    function renderPremios(html){
+        var lineas = html.split('<br>').map(function(l){return l.trim();}).filter(Boolean);
+        cont.innerHTML = lineas.length
+            ? lineas.map(function(l){return '<div class="premio-item">'+l+'</div>';}).join('')
+            : '<p style="color:#64748b;font-weight:700;font-size:15px;text-align:center;font-style:italic;">'+html+'</p>';
+    }
+    renderPremios(defaultHtml);
+    fetch(CONFIG_RAW+'?_='+Date.now())
+        .then(function(r){return r.ok?r.json():null;})
+        .then(function(d){if(d&&d.premios)renderPremios(d.premios.replace(/\n/g,'<br>'));})
+        .catch(function(){});
+})();
+
+// ── AudioContext lazy ────────────────────────────────────────
+var _audioCtx = null;
+function getAudio(){
+    if(!_audioCtx){try{_audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}
+    return _audioCtx;
+}
+function playTone(freq,type,dur,vol){
+    var ctx=getAudio();if(!ctx)return;
+    if(ctx.state==='suspended')ctx.resume();
+    try{
+        var o=ctx.createOscillator(),g=ctx.createGain();
+        o.type=type;o.frequency.setValueAtTime(freq,ctx.currentTime);
+        g.gain.setValueAtTime(vol,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+dur);
+        o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur);
+    }catch(e){}
+}
+function playClick(){playTone(600,'sine',0.1,0.05);}
+function playSuccess(){playTone(440,'sine',0.1,0.05);setTimeout(function(){playTone(660,'sine',0.2,0.1);},100);}
+function playSplash(){playTone(300,'triangle',0.4,0.05);setTimeout(function(){playTone(600,'triangle',0.6,0.05);},300);}
+
+// ── Identidad ────────────────────────────────────────────────
+function obtenerNombreCompleto(){
+    var n=(document.getElementById('user_name').value||'').trim();
+    var sel=document.getElementById('nro_entrada');
+    var e=sel?sel.value:'1';
+    if(!n)return '';
+    return e==='1'?n:n+' (#'+e+')';
+}
+function votoKey(id){
+    var sel=document.getElementById('nro_entrada');
+    var e=sel?sel.value:'1';
+    return 'voto_e'+e+'_'+id;
+}
+var _nameDebounce=null;
+function onNameInput(val){localStorage.setItem('prode_user',val.trim());clearTimeout(_nameDebounce);_nameDebounce=setTimeout(checkStatus,600);}
+function onEntradaChange(){playClick();checkStatus();}
+
+// ── Activación ───────────────────────────────────────────────
+async function solicitarActivacion(){
+    playClick();
+    var n=obtenerNombreCompleto();
+    if(!n){alert('¡Ingresá tu nombre primero!');return;}
+    var btn=document.getElementById('btn_solicitar');
+    btn.disabled=true;btn.innerText='REGISTRANDO...';
+    try{
+        await fetch(API,{method:'POST',body:JSON.stringify({empresa:EMPRESA,usuario:n,id_partido:0,prediccion:'PENDIENTE',token:TOKEN_PUB,wa_jugador:(document.getElementById('user_wa')?document.getElementById('user_wa').value.replace(/\D/g,''):'')})});
+        window.open('https://wa.me/'+WA_ADMIN+'?text=Hola! Soy '+encodeURIComponent(n)+', quiero activar mi cuenta para el Prode de PIZZA10.');
+        btn.innerText='ESPERANDO ACTIVACIÓN...';
+    }catch(e){btn.disabled=false;btn.innerText='REINTENTAR';}
+}
+
+// ── Check de estado ──────────────────────────────────────────
+async function checkStatus(){
+    var n=obtenerNombreCompleto();if(!n)return;
+    try{
+        var r=await fetch(API+'?empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN_PUB);
+        var d=await r.json();
+        _lastRanking=d.ranking||[];
+        var user=d.ranking.find(function(u){return u.nombre.toLowerCase()===n.toLowerCase();});
+        if(user&&user.puntos!=='PENDIENTE'){
+            document.getElementById('panel-bloqueo').classList.add('hidden');
+            document.getElementById('lista-votar').classList.remove('hidden');
+        } else {
+            document.getElementById('panel-bloqueo').classList.remove('hidden');
+            document.getElementById('lista-votar').classList.add('hidden');
+        }
+        renderVotar(d.partidos);
+        renderHistorial(d.partidos);
+        renderRanking(d.ranking, n);
+        if(isFirstLoad){
+            setTimeout(function(){var sp=document.getElementById('splash');sp.style.opacity='0';playSplash();setTimeout(function(){sp.remove();},500);},800);
+            isFirstLoad=false;
+        }
+    }catch(e){}
+}
+
+// ── Render: partidos pendientes (3 botones L/E/V) ────────────
+function renderVotar(ps){
+    var pend=ps.filter(function(p){return p.estado==='Pendiente';});
+    document.getElementById('lista-votar').innerHTML=pend.map(function(p){
+        var vk=votoKey(p.id),v=localStorage.getItem(vk);
+        var opts=['Local','Empate','Visitante'].map(function(o){
+            return '<button onclick="votar('+p.id+',\''+o+'\',this)"'+
+                   ' class="btn-pred vote-btn-'+p.id+(v===o?' selected':'')+'">'+ o+'</button>';
+        }).join('');
+        return '<div class="bg-white p-5 rounded-2xl shadow-sm mb-4 border border-slate-100">'+
+               '<p class="text-[10px] font-black text-slate-400 mb-4 uppercase bg-slate-50 p-2 rounded-lg text-center">'+
+               (p.grupo?p.grupo+' | ':'')+p.fecha_str+'</p>'+
+               '<div class="flex justify-between items-center mb-5 font-bold text-sm">'+
+               '<span class="flex-1 text-center">'+p.local+'</span>'+
+               '<span class="mx-2 text-slate-300">VS</span>'+
+               '<span class="flex-1 text-center">'+p.visitante+'</span></div>'+
+               '<div class="flex gap-2">'+opts+'</div>'+
+               (v?'<p class="vote-hint">Voto actual: '+v+' — podés cambiarlo antes del inicio</p>':'')+
+               '</div>';
+    }).join('');
+}
+
+// ── Render: historial con ✅/❌ ────────────────────────────────
+function ganadorDeGoles(gl, gv){
+    if(gl>gv)return 'Local';
+    if(gl<gv)return 'Visitante';
+    return 'Empate';
+}
+
+function renderHistorial(ps){
+    var fin=ps.filter(function(p){return p.estado==='Finalizado';});
+    var wrap=document.getElementById('lista-historial');
+    var cards=document.getElementById('historial-cards');
+    if(!fin.length){wrap.classList.add('hidden');return;}
+    wrap.classList.remove('hidden');
+    cards.innerHTML=fin.map(function(p){
+        var vk=votoKey(p.id);
+        var miVoto=localStorage.getItem(vk);
+        var gl=parseInt(p.gol_local),gv=parseInt(p.gol_visitante);
+        var tieneResultado=!isNaN(gl)&&!isNaN(gv)&&p.gol_local!==null;
+        var badge='';
+        if(!miVoto){
+            badge='<span class="badge-pen">Sin voto</span>';
+        } else if(!tieneResultado){
+            badge='<span class="badge-pen">Resultado pendiente</span>';
+        } else if(miVoto===ganadorDeGoles(gl,gv)){
+            badge='<span class="badge-ok">✅ +3 pts — Acertaste</span>';
+        } else {
+            badge='<span class="badge-err">❌ 0 pts — Fallaste</span>';
+        }
+        var marcador=tieneResultado?gl+' — '+gv:'? — ?';
+        return '<div class="hist-card">'+
+               '<div class="hist-equipos">'+
+               '<span>'+p.local+'</span>'+
+               '<span style="font-size:13px;color:#334155;font-weight:900;">'+marcador+'</span>'+
+               '<span>'+p.visitante+'</span></div>'+
+               '<div class="hist-voto">'+badge+
+               (miVoto?'<span class="hist-resultado">Tu voto: '+miVoto+'</span>':'')+
+               '</div></div>';
+    }).join('');
+}
+
+// ── Render: ranking ───────────────────────────────────────────
+function renderRanking(rk, miNombre){
+    var activos=rk.filter(function(r){return r.puntos!=='PENDIENTE';});
+    var miPos=activos.findIndex(function(r){return r.nombre.toLowerCase()===(miNombre||'').toLowerCase();});
+    document.getElementById('ranking-compartir-wrap').classList.toggle('hidden', miPos<0);
+    document.getElementById('tabla-ranking').innerHTML=activos.map(function(r,i){
+        var esYo=r.nombre.toLowerCase()===(miNombre||'').toLowerCase();
+        return '<div class="flex items-center p-4 border-b border-slate-100 last:border-0'+(esYo?' ranking-own':'')+'">'+
+               '<span class="w-8 font-black '+(esYo?'text-emerald-600':'text-slate-400')+'">#'+(i+1)+'</span>'+
+               '<span class="flex-1 font-black '+(esYo?'text-emerald-800':'text-slate-700')+' ml-2">'+
+               r.nombre+(esYo?' 👈':'')+
+               '</span>'+
+               '<span class="font-black text-lg '+(esYo?'text-emerald-600':'text-emerald-500')+'">'+r.puntos+' pts</span></div>';
+    }).join('');
+}
+
+// ── Compartir ranking ────────────────────────────────────────
+function compartirRanking(){
+    playClick();
+    var n=obtenerNombreCompleto();
+    var activos=_lastRanking.filter(function(r){return r.puntos!=='PENDIENTE';});
+    var pos=activos.findIndex(function(r){return r.nombre.toLowerCase()===n.toLowerCase();});
+    var pts=pos>=0?activos[pos].puntos:0;
+    var total=activos.length;
+    var msg='🔥 ¡Voy '+(pos>=0?'puesto #'+(pos+1):'en el ranking')+' de '+total+' en el Prode de PIZZA10!'+
+            '\n💪 Llevo '+pts+' puntos acumulados.'+
+            '\n¿Te animás a ganarme?'+
+            '\n👉 Anotate acá: '+LINK_APP;
+    window.open('https://wa.me/?text='+encodeURIComponent(msg));
+}
+
+// ── Votar con retry automático ───────────────────────────────
+async function votar(id,pred,btn){
+    playClick();
+    var n=obtenerNombreCompleto();if(!n){alert('Ingresá tu nombre primero.');return;}
+    var allBtns=document.querySelectorAll('.vote-btn-'+id);
+    allBtns.forEach(function(b){b.disabled=true;});
+    var prev=btn.innerText;btn.innerText='⏳';
+
+    async function intentar(intento){
+        if(intento>1)btn.classList.add('retrying');
+        try{
+            var r=await fetch(API,{method:'POST',body:JSON.stringify({empresa:EMPRESA,usuario:n,id_partido:id,prediccion:pred})});
+            var d=await r.json();
+            btn.classList.remove('retrying');
+            if(d.ok){localStorage.setItem(votoKey(id),pred);playSuccess();await checkStatus();}
+            else{alert(d.error||'No se pudo registrar el voto');btn.innerText=prev;allBtns.forEach(function(b){b.disabled=false;});}
+        }catch(e){
+            btn.classList.remove('retrying');
+            if(intento<2){btn.innerText='↺';setTimeout(function(){intentar(intento+1);},2000);}
+            else{alert('Error de conexión. Intentá de nuevo.');btn.innerText=prev;allBtns.forEach(function(b){b.disabled=false;});}
+        }
+    }
+    intentar(1);
+}
+
+// ── Tabs ─────────────────────────────────────────────────────
+function switchTab(id,btn){
+    playClick();
+    document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.btn-nav').forEach(function(b){b.classList.remove('active');});
+    document.getElementById('tab-'+id).classList.add('active');
+    btn.classList.add('active');
+}
+
+document.getElementById('user_name').value=localStorage.getItem('prode_user')||'';
+// Fallback: siempre sacar el splash después de 3s aunque no haya nombre o falle la API
+setTimeout(function(){
+    var sp=document.getElementById('splash');
+    if(sp){sp.style.opacity='0';setTimeout(function(){if(sp.parentNode)sp.remove();},500);}
+},3000);
+var _installPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();_installPrompt=e;
+    var btn=document.getElementById('btn-instalar');if(btn)btn.style.display='flex';
+});
+window.addEventListener('appinstalled',function(){
+    var btn=document.getElementById('btn-instalar');if(btn)btn.style.display='none';
+});
+function instalarApp(){
+    if(_installPrompt){_installPrompt.prompt();_installPrompt.userChoice.then(function(){_installPrompt=null;});}
+}
+var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+var isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
+if(isIOS&&!isStandalone){
+    setTimeout(function(){var b=document.getElementById('ios-banner');if(b)b.style.display='block';},4000);
+}
+checkStatus();
+setInterval(checkStatus,20000);
+
+</script>
+</body>
+</html>
+<\/textarea>
+
+<!-- ═══════════════════════════════════════════════════════
+     TEMPLATE: PANEL ADMINISTRADOR
+════════════════════════════════════════════════════════ -->
+<textarea id="raw-admin" style="display:none;">sibility:hidden;position:absolute;width:0;height:0;overflow:hidden;">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - PIZZA10</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap');
+        body { background:#0f172a; color:white; padding-bottom:90px; font-family:'Archivo',sans-serif; }
+        .tab-content { display:none; padding:1.5rem; }
+        .tab-content.active { display:block; }
+        .btn-nav { color:#475569; }
+        .btn-nav.active { color:#34d399; }
+        .pin-digit { width:52px; height:64px; background:#1e293b; border:2px solid #334155; border-radius:1rem; font-size:28px; font-weight:900; text-align:center; color:white; outline:none; transition:all 0.2s; }
+        .pin-digit:focus { border-color:#10b981; box-shadow:0 0 0 3px rgba(16,185,129,0.2); }
+        textarea.admin-ta { background:#1e293b; border:1px solid #334155; color:white; border-radius:1rem; padding:1rem; width:100%; font-family:'Archivo',sans-serif; font-size:13px; font-weight:600; resize:vertical; min-height:120px; outline:none; transition:border-color 0.2s; }
+        textarea.admin-ta:focus { border-color:#10b981; }
+        .btn-sm { font-size:11px; font-weight:900; padding:6px 14px; border-radius:8px; cursor:pointer; transition:all 0.2s; }
+        .btn-green { background:#10b981; color:white; }
+        .btn-green:hover { background:#059669; }
+        .btn-green:disabled { opacity:0.6; cursor:not-allowed; }
+        .btn-red { background:rgba(239,68,68,0.15); color:#f87171; border:1px solid rgba(239,68,68,0.3); }
+        .btn-red:hover { background:rgba(239,68,68,0.3); }
+        .btn-slate { background:#334155; color:#94a3b8; }
+        .btn-slate:hover { background:#475569; color:white; }
+        .player-row { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:10px 0; border-bottom:1px solid #1e293b; }
+        .player-row:last-child { border-bottom:none; }
+    </style>
+</head>
+<body class="max-w-lg mx-auto">
+
+<!-- ── PANTALLA DE PIN ─────────────────────────────── -->
+<div id="pin-screen" class="min-h-screen flex flex-col items-center justify-center p-8">
+    <div class="text-center mb-10">
+        <span style="font-size:4rem;">🛡️</span>
+        <h1 class="text-2xl font-black italic uppercase text-white mt-4">Panel Admin</h1>
+        <p class="text-slate-400 text-sm mt-2 font-bold">PIZZA10</p>
+    </div>
+    <div class="bg-slate-800 p-8 rounded-[2rem] border border-slate-700 w-full max-w-sm">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 text-center">Ingresá el PIN de acceso</p>
+        <div class="flex justify-center gap-3 mb-6">
+            <input type="password" inputmode="numeric" class="pin-digit" id="p1" maxlength="1" oninput="avanzarPin(this,'p2')" onkeydown="retrocederPin(event,this,'')">
+            <input type="password" inputmode="numeric" class="pin-digit" id="p2" maxlength="1" oninput="avanzarPin(this,'p3')" onkeydown="retrocederPin(event,this,'p1')">
+            <input type="password" inputmode="numeric" class="pin-digit" id="p3" maxlength="1" oninput="avanzarPin(this,'p4')" onkeydown="retrocederPin(event,this,'p2')">
+            <input type="password" inputmode="numeric" class="pin-digit" id="p4" maxlength="1" oninput="verificarPin()"        onkeydown="retrocederPin(event,this,'p3')">
+        </div>
+        <div id="pin-error" class="hidden text-center text-red-400 text-xs font-black uppercase mb-4">PIN incorrecto, intentá de nuevo</div>
+        <button onclick="verificarPin()" class="w-full btn-green btn-sm py-3 rounded-xl text-sm uppercase">Entrar</button>
+    </div>
+</div>
+
+<!-- ── APP PRINCIPAL ──────────────────────────────── -->
+<div id="main-app" style="display:none">
+
+    <header class="p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 bg-slate-900 z-50">
+        <div>
+            <h1 class="text-lg font-black text-emerald-400 italic uppercase leading-none">🛡️ Admin</h1>
+            <p class="text-[10px] text-slate-500 font-bold uppercase">PIZZA10</p>
+        </div>
+        <button onclick="load()" class="text-[9px] bg-slate-800 px-3 py-1.5 rounded-lg uppercase font-bold">Refrescar 🟢</button>
+    </header>
+
+    <!-- TAB: JUGADORES -->
+    <main id="tab-jugadores" class="tab-content active">
+        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700 shadow-xl space-y-5">
+
+            <div>
+                <h2 class="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-3">⏳ Esperando Activación</h2>
+                <div id="lista-pendientes"></div>
+            </div>
+
+            <hr class="border-slate-700">
+
+            <div>
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">✅ Jugadores Habilitados</h2>
+                    <span id="contador-activos" class="text-[10px] font-black text-slate-500"></span>
+                </div>
+                <div id="lista-activos"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- TAB: STATS -->
+    <main id="tab-stats" class="tab-content">
+        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700 mb-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Ranking Completo</h2>
+                <button onclick="descargarCSV()" class="btn-sm btn-slate rounded-lg">⬇️ Exportar CSV</button>
+            </div>
+            <div id="ranking" class="space-y-2"></div>
+        </div>
+        <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl">
+            <p class="text-[10px] text-slate-500 font-black uppercase tracking-wide mb-1">📊 Sistema de Puntos</p>
+            <p class="text-[10px] text-slate-400 leading-relaxed">
+                <strong class="text-emerald-400">3 pts</strong> — Acertás el resultado (Local / Empate / Visitante) ·
+                <strong class="text-slate-500">0 pts</strong> — Resultado incorrecto
+            </p>
+        </div>
+    </main>
+
+    <!-- TAB: PREMIOS -->
+    <main id="tab-premios" class="tab-content">
+        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700">
+            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">🎁 Configurar Premios</h2>
+            <p class="text-[10px] text-slate-500 mb-4 leading-relaxed">
+                Escribí los premios (uno por línea). Al guardar, los jugadores verán los cambios en 1-2 minutos <strong class="text-emerald-400">sin necesidad de regenerar la app</strong>.
+            </p>
+            <textarea class="admin-ta" id="premios-editor"
+                placeholder="🥇 1er Puesto: Un costillar
+🥈 2do Puesto: 2 docenas de empanadas
+🥉 3er Puesto: Pack de cervezas"><\/textarea>
+            <button onclick="guardarPremios()" id="btn-guardar-premios" class="btn-sm btn-green rounded-xl w-full py-3 mt-3 text-sm uppercase">
+                Guardar y Publicar Premios
+            </button>
+            <div id="premios-status" class="text-[10px] font-black text-center mt-3 uppercase tracking-wide hidden"></div>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 w-full bg-slate-900 h-[75px] flex items-center justify-around border-t border-slate-800 z-50">
+        <button onclick="switchTab('jugadores',this)" class="btn-nav active flex flex-col items-center">
+            <span class="text-xl">👥</span><span class="text-[9px] font-black uppercase">Jugadores</span>
+        </button>
+        <button onclick="switchTab('stats',this)" class="btn-nav flex flex-col items-center">
+            <span class="text-xl">📊</span><span class="text-[9px] font-black uppercase">Ranking</span>
+        </button>
+        <button onclick="switchTab('premios',this)" class="btn-nav flex flex-col items-center">
+            <span class="text-xl">🎁</span><span class="text-[9px] font-black uppercase">Premios</span>
+        </button>
+    </nav>
+
+    <!-- Botón flotante de soporte -->
+    <a id="btn-soporte"
+       href="https://wa.me/?text=Hola!+Necesito+soporte+con+el+Prode+de+PIZZA10."
+       target="_blank"
+       style="position:fixed;bottom:88px;right:16px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 16px rgba(37,211,102,0.45);z-index:60;text-decoration:none;"
+       title="Soporte técnico">💬</a>
+
+</div>
+
+<script>
+var API           = "https://prode-mundial.emprendimientoweb.workers.dev";
+var EMPRESA       = "PIZZA10";
+var EMPRESA_SAFE  = "PIZZA10";
+var TOKEN         = "ProdeAdmin2026Julio";
+var PIN_ADMIN     = "";
+var GH_TOKEN      = ""; // El token se pedirá manualmente si es necesario
+var GH_USER       = "Julinihub";
+var GH_REPO       = "clientes-prode-2026";
+var CONFIG_FILE   = "config_" + EMPRESA_SAFE + ".json";
+var WA_SOPORTE    = "";
+
+var _cachedData   = null; // guardamos la última respuesta del API para el CSV
+
+// ── Ocultar botón soporte si no hay número ──────────────────
+if (!WA_SOPORTE) document.getElementById('btn-soporte').style.display = 'none';
+
+// ── PIN ──────────────────────────────────────────────────────
+function avanzarPin(el, nextId) {
+    if(el.value.length===1 && nextId) document.getElementById(nextId).focus();
+}
+function retrocederPin(e, el, prevId) {
+    if(e.key==='Backspace' && el.value==='' && prevId) {
+        document.getElementById(prevId).focus();
+    }
+}
+function verificarPin() {
+    var pin = ['p1','p2','p3','p4'].map(function(id){return document.getElementById(id).value;}).join('');
+    if(!PIN_ADMIN || pin===PIN_ADMIN) {
+        sessionStorage.setItem('admin_auth_'+EMPRESA, '1');
+        mostrarApp();
+    } else {
+        var err = document.getElementById('pin-error');
+        err.classList.remove('hidden');
+        ['p1','p2','p3','p4'].forEach(function(id){document.getElementById(id).value='';});
+        document.getElementById('p1').focus();
+        setTimeout(function(){err.classList.add('hidden');}, 2500);
+    }
+}
+function mostrarApp() {
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('main-app').style.display   = 'block';
+    load();
+    cargarPremiosActuales();
+}
+
+// Verificar al cargar: sin PIN o sesión ya autenticada
+if(!PIN_ADMIN || sessionStorage.getItem('admin_auth_'+EMPRESA)) {
+    mostrarApp();
+}
+
+// ── Helpers ──────────────────────────────────────────────────
+function parsearNombre(nombre){
+    var m=nombre.match(/^(.+?)\s+\(#(\d+)\)$/);
+    return m?{base:m[1],entrada:'Entrada #'+m[2]}:{base:nombre,entrada:'Entrada #1'};
+}
+function escaparAttr(s){ return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+// ── Activar jugador ──────────────────────────────────────────
+async function activar(nombre){
+    if(!confirm('¿Habilitar a '+nombre+'?'))return;
+    try{
+        var r=await fetch(API,{method:'POST',body:JSON.stringify({empresa:EMPRESA,usuario:nombre,id_partido:0,prediccion:'ACTIVADO',token:TOKEN})});
+        var d=await r.json();
+        if(d.ok){load();}
+        else alert('Error al activar: '+(d.error||'desconocido'));
+    }catch(e){alert('Error de conexión.');}
+}
+
+// ── Eliminar jugador (máscara local) ─────────────────────────
+function eliminarJugador(nombre){
+    if(!confirm('¿Eliminar a '+nombre+' de la lista?\n\nEsto lo oculta localmente. Para eliminarlo definitivamente del servidor, borrá su fila en el Google Sheet.')){return;}
+    var key='deleted_'+EMPRESA;
+    var deleted=JSON.parse(localStorage.getItem(key)||'[]');
+    if(!deleted.includes(nombre)) deleted.push(nombre);
+    localStorage.setItem(key,JSON.stringify(deleted));
+    load();
+}
+
+function getDeleted(){
+    return JSON.parse(localStorage.getItem('deleted_'+EMPRESA)||'[]');
+}
+
+// ── Carga de datos ────────────────────────────────────────────
+async function load(){
+    try{
+        var r=await fetch(API+'?accion=admin_view&empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN);
+        var d=await r.json();
+        _cachedData=d;
+        var deleted=getDeleted();
+
+        var pend=d.usuarios.filter(function(u){return u.predicciones_raw&&u.predicciones_raw.includes('PENDIENTE')&&!deleted.includes(u.nombre);});
+        var act =d.usuarios.filter(function(u){return (!u.predicciones_raw||!u.predicciones_raw.includes('PENDIENTE'))&&!deleted.includes(u.nombre);});
+
+        // Pendientes
+        document.getElementById('lista-pendientes').innerHTML=pend.length
+            ?pend.map(function(u){
+                var p=parsearNombre(u.nombre);
+                var sn=escaparAttr(u.nombre);
+                var waLink=u.wa_jugador?'<a href="https://wa.me/'+u.wa_jugador+'" target="_blank" class="btn-sm btn-slate rounded-lg" style="text-decoration:none;">💬</a>':'';
+                return '<div class="player-row">'+
+                       '<div><span class="font-bold text-sm block">'+p.base+'</span>'+
+                       '<span class="text-[10px] text-amber-400 font-black">'+p.entrada+'</span>'+
+                       (u.wa_jugador?'<span class="text-[10px] text-slate-500 block">📱 '+u.wa_jugador+'</span>':'')+
+                       '</div>'+
+                       '<div class="flex gap-2">'+
+                       waLink+
+                       '<button onclick="activar(\''+sn+'\')" class="btn-sm btn-green rounded-lg">Activar</button>'+
+                       '<button onclick="eliminarJugador(\''+sn+'\')" class="btn-sm btn-red rounded-lg">🗑️</button>'+
+                       '</div></div>';
+            }).join('')
+            :'<p class="text-[10px] text-slate-600 italic text-center py-4">No hay solicitudes nuevas</p>';
+
+        // Activos
+        document.getElementById('contador-activos').innerText=act.length+' jugadores';
+        document.getElementById('lista-activos').innerHTML=act.map(function(u){
+            var p=parsearNombre(u.nombre);
+            var sn=escaparAttr(u.nombre);
+            var waAct=u.wa_jugador?'<a href="https://wa.me/'+u.wa_jugador+'" target="_blank" style="text-decoration:none;font-size:14px;" title="WhatsApp">💬</a>':'';
+            return '<div class="player-row">'+
+                   '<div><span class="text-sm font-bold text-slate-200">'+p.base+'</span>'+
+                   '<span class="text-[10px] text-slate-500 ml-2">'+p.entrada+'</span></div>'+
+                   '<div class="flex gap-2 items-center">'+waAct+
+                   '<button onclick="eliminarJugador(\''+sn+'\')" class="btn-sm btn-red rounded-lg">🗑️</button>'+
+                   '</div></div>';
+        }).join('');
+
+        // Ranking en tab stats
+        var rankMap={};
+        d.ranking.forEach(function(r){rankMap[r.nombre]=r.puntos;});
+        document.getElementById('ranking').innerHTML=d.ranking
+            .filter(function(u){return u.puntos!=='PENDIENTE'&&!deleted.includes(u.nombre);})
+            .map(function(u,i){
+                var p=parsearNombre(u.nombre);
+                return '<div class="flex justify-between p-3 bg-slate-900 rounded-xl border border-slate-700 mb-1">'+
+                       '<div><span class="font-bold text-xs block">#'+(i+1)+' '+p.base+'</span>'+
+                       '<span class="text-[10px] text-slate-500">'+p.entrada+'</span></div>'+
+                       '<span class="font-black text-emerald-400 text-lg self-center">'+u.puntos+' pts</span></div>';
+            }).join('');
+
+    }catch(e){console.error('Error al cargar datos:',e);}
+}
+
+// ── Exportar CSV ─────────────────────────────────────────────
+function descargarCSV(){
+    if(!_cachedData){alert('Primero refrescá los datos.');return;}
+    var deleted=getDeleted();
+    var rankMap={};
+    _cachedData.ranking.forEach(function(r){rankMap[r.nombre]=r.puntos;});
+
+    var rows=[['Nombre','Entrada','WhatsApp','Puntos','Estado']];
+    _cachedData.usuarios
+        .filter(function(u){return !deleted.includes(u.nombre);})
+        .forEach(function(u){
+            var p=parsearNombre(u.nombre);
+            var pts=rankMap[u.nombre]!==undefined?rankMap[u.nombre]:'0';
+            var estado=(u.predicciones_raw&&u.predicciones_raw.includes('PENDIENTE'))?'Pendiente':'Activo';
+            rows.push([p.base,p.entrada,u.wa_jugador||'',pts,estado]);
+        });
+
+    var csv=rows.map(function(r){
+        return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');
+    }).join('\r\n');
+
+    var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url;
+    a.download='clientes_'+EMPRESA_SAFE+'_'+new Date().toISOString().split('T')[0]+'.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// ── Premios dinámicos via GitHub ──────────────────────────────
+async function cargarPremiosActuales(){
+    try{
+        var r=await fetch('https://raw.githubusercontent.com/'+GH_USER+'/'+GH_REPO+'/main/'+CONFIG_FILE+'?_='+Date.now());
+        if(r.ok){
+            var d=await r.json();
+            if(d.premios) document.getElementById('premios-editor').value=d.premios;
+        }
+    }catch(e){}
+}
+
+async function guardarPremios(){
+    var premios=document.getElementById('premios-editor').value.trim();
+    var statusEl=document.getElementById('premios-status');
+    var btn=document.getElementById('btn-guardar-premios');
+    statusEl.classList.remove('hidden');
+    statusEl.style.color='#94a3b8';
+    statusEl.innerText='⏳ Guardando...';
+    btn.disabled=true;
+
+    try{
+        var token_actual = (GH_TOKEN || prompt("Por seguridad, ingresá tu GitHub Token para guardar los premios:") || "").trim().replace(/[^a-zA-Z0-9_]/g, '');
+        if(!token_actual) { alert("Token requerido."); btn.disabled=false; return; }
+        
+        var configData={premios:premios,empresa:EMPRESA,updated:new Date().toISOString()};
+        var content=btoa(unescape(encodeURIComponent(JSON.stringify(configData,null,2))));
+        var apiUrl='https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/'+CONFIG_FILE;
+
+        var sha=null;
+        var check=await fetch(apiUrl,{headers:{'Authorization':'token '+token_actual}});
+        if(check.ok){var cd=await check.json();sha=cd.sha;}
+
+        var payload={message:'Premios: '+EMPRESA,content:content};
+        if(sha) payload.sha=sha;
+
+        var res=await fetch(apiUrl,{method:'PUT',headers:{'Authorization':'token '+token_actual},body:JSON.stringify(payload)});
+        if(res.ok) GH_TOKEN = token_actual; // Guardamos en memoria para la sesión actual
+        if(!res.ok) throw new Error('GitHub error '+res.status);
+
+        statusEl.style.color='#34d399';
+        statusEl.innerText='✅ Premios publicados — los jugadores verán los cambios en 1-2 minutos';
+    }catch(e){
+        statusEl.style.color='#f87171';
+        statusEl.innerText='❌ Error: '+e.message;
+    }finally{
+        btn.disabled=false;
+    }
+}
+
+// ── Tabs ──────────────────────────────────────────────────────
+function switchTab(id,btn){
+    document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.btn-nav').forEach(function(b){b.classList.remove('active');});
+    document.getElementById('tab-'+id).classList.add('active');
+    btn.classList.add('active');
+    if(id==='premios') cargarPremiosActuales();
+}
+
+setInterval(load,30000);
+</script>
+</body>
+</html>
