@@ -7,413 +7,102 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap');
-        body { background:#0f172a; color:white; padding-bottom:90px; font-family:'Archivo',sans-serif; }
+        body { background:#0f172a; color:white; font-family:'Archivo',sans-serif; }
         .tab-content { display:none; padding:1.5rem; }
         .tab-content.active { display:block; }
-        .btn-nav { color:#475569; }
-        .btn-nav.active { color:#34d399; }
-        textarea.admin-ta { background:#1e293b; border:1px solid #334155; color:white; border-radius:1rem; padding:1rem; width:100%; font-family:'Archivo',sans-serif; font-size:13px; font-weight:600; resize:vertical; min-height:120px; outline:none; transition:border-color 0.2s; }
-        textarea.admin-ta:focus { border-color:#10b981; }
-        .btn-sm { font-size:11px; font-weight:900; padding:6px 14px; border-radius:8px; cursor:pointer; transition:all 0.2s; }
-        .btn-green { background:#10b981; color:white; }
-        .btn-green:hover { background:#059669; }
-        .btn-green:disabled { opacity:0.6; cursor:not-allowed; }
-        .btn-red { background:rgba(239,68,68,0.15); color:#f87171; border:1px solid rgba(239,68,68,0.3); }
-        .btn-red:hover { background:rgba(239,68,68,0.3); }
-        .btn-slate { background:#334155; color:#94a3b8; }
-        .btn-slate:hover { background:#475569; color:white; }
-        .player-row { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:10px 0; border-bottom:1px solid #1e293b; }
-        .player-row:last-child { border-bottom:none; }
+        .player-row { display:flex; justify-content:space-between; items-center:center; padding:12px 0; border-bottom:1px solid #1e293b; }
+        .btn-green { background:#10b981; color:white; padding:6px 12px; border-radius:8px; font-weight:900; font-size:11px; }
     </style>
 </head>
-<body class="max-w-lg mx-auto">
+<body>
 
 
 
 <div id="main-app" class="block">
-
-    <header class="p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 bg-slate-900 z-50">
+    <header class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900 sticky top-0 z-50">
         <div>
-            <h1 class="text-lg font-black text-emerald-400 italic uppercase leading-none">🛡️ Admin</h1>
+            <h1 class="text-emerald-400 font-black italic uppercase">🛡️ Admin</h1>
             <p class="text-[10px] text-slate-500 font-bold uppercase">PRONTO10</p>
         </div>
-        <div class="flex gap-2">
-            <button onclick="restaurarOcultos()" class="text-[9px] bg-slate-700 px-2 py-1.5 rounded-lg uppercase font-bold text-slate-300">♻️ Ocultos</button>
-            <button onclick="load()" class="text-[9px] bg-emerald-600 px-3 py-1.5 rounded-lg uppercase font-bold text-white shadow-lg shadow-emerald-500/20">Refrescar 🟢</button>
-        </div>
+        <button onclick="load()" class="bg-emerald-600 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase">Refrescar 🟢</button>
     </header>
 
     <main id="tab-jugadores" class="tab-content active">
-        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700 shadow-xl space-y-5">
-
-            <div>
-                <h2 class="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-3">⏳ Esperando Activación</h2>
-                <div id="lista-pendientes"></div>
-            </div>
-
-            <hr class="border-slate-700">
-
-            <div>
-                <div class="flex justify-between items-center mb-3">
-                    <h2 class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">✅ Jugadores Habilitados</h2>
-                    <span id="contador-activos" class="text-[10px] font-black text-slate-500"></span>
-                </div>
-                <div id="lista-activos"></div>
-            </div>
-        </div>
-    </main>
-
-    <main id="tab-stats" class="tab-content">
-        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700 mb-4">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Ranking Completo</h2>
-                <button onclick="descargarCSV()" class="btn-sm btn-slate rounded-lg">⬇️ Exportar CSV</button>
-            </div>
-            <div id="ranking" class="space-y-2"></div>
-        </div>
-        <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl">
-            <p class="text-[10px] text-slate-500 font-black uppercase tracking-wide mb-1">📊 Sistema de Puntos</p>
-            <p class="text-[10px] text-slate-400 leading-relaxed">
-                <strong class="text-emerald-400">3 pts</strong> — Acertás el resultado (Local / Empate / Visitante) ·
-                <strong class="text-slate-500">0 pts</strong> — Resultado incorrecto
-            </p>
-        </div>
-    </main>
-
-    <main id="tab-premios" class="tab-content">
         <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700">
-            <h2 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">🎁 Configurar Premios</h2>
-            <p class="text-[10px] text-slate-500 mb-4 leading-relaxed">
-                Escribí los premios (uno por línea). Al guardar, los jugadores verán los cambios en 1-2 minutos <strong class="text-emerald-400">sin necesidad de regenerar la app</strong>.
-            </p>
-            <textarea class="admin-ta" id="premios-editor"
-                placeholder="🥇 1er Puesto: Un costillar
-🥈 2do Puesto: 2 docenas de empanadas
-🥉 3er Puesto: Pack de cervezas"]</textarea>
-            <button onclick="guardarPremios()" id="btn-guardar-premios" class="btn-sm btn-green rounded-xl w-full py-3 mt-3 text-sm uppercase">
-                Guardar y Publicar Premios
-            </button>
-            <div id="premios-status" class="text-[10px] font-black text-center mt-3 uppercase tracking-wide hidden"></div>
+            <h2 class="text-[10px] font-black text-amber-400 uppercase tracking-widest mb-4">⏳ Esperando Activación</h2>
+            <div id="lista-pendientes"></div>
+            <hr class="my-6 border-slate-700">
+            <h2 class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-4">✅ Jugadores Activos</h2>
+            <div id="lista-activos"></div>
         </div>
     </main>
 
-    <nav class="fixed bottom-0 w-full bg-slate-900 h-[75px] flex items-center justify-around border-t border-slate-800 z-50">
-        <button onclick="switchTab('jugadores',this)" class="btn-nav active flex flex-col items-center">
-            <span class="text-xl">👥</span><span class="text-[9px] font-black uppercase">Jugadores</span>
-        </button>
-        <button onclick="switchTab('stats',this)" class="btn-nav flex flex-col items-center">
-            <span class="text-xl">📊</span><span class="text-[9px] font-black uppercase">Ranking</span>
-        </button>
-        <button onclick="switchTab('premios',this)" class="btn-nav flex flex-col items-center">
-            <span class="text-xl">🎁</span><span class="text-[9px] font-black uppercase">Premios</span>
-        </button>
+    <nav class="fixed bottom-0 w-full bg-slate-900 h-[70px] flex items-center justify-around border-t border-slate-800">
+        <button class="text-[10px] font-black uppercase text-emerald-400">👥 Jugadores</button>
     </nav>
-
-    <a id="btn-soporte"
-       href="https://wa.me/?text=Hola!+Necesito+soporte+con+el+Prode+de+PRONTO10."
-       target="_blank"
-       style="position:fixed;bottom:88px;right:16px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 16px rgba(37,211,102,0.45);z-index:60;text-decoration:none;"
-       title="Soporte técnico">💬</a>
-
 </div>
 
 <script>
-var API           = "https://prode-mundial.emprendimientoweb.workers.dev";
-var EMPRESA       = "PRONTO10";
-var EMPRESA_SAFE  = "PRONTO10";
-var TOKEN         = "ProdeAdmin2026Julio";
-var GH_USER       = "Julinihub";
-var GH_REPO       = "clientes-prode-2026";
-var CONFIG_FILE   = "config_" + EMPRESA_SAFE + ".json";
-var WA_SOPORTE    = "";
-var PIN_ADMIN     = "";
+var API = "https://prode-mundial.emprendimientoweb.workers.dev", EMPRESA = "PRONTO10", TOKEN = "ProdeAdmin2026Julio", PIN = "";
 
-var GH_TOKEN      = "iwTpX3G6LK0o6rVH7w7PdCyfgDyj0PkYiLQk_phg".split('').reverse().join('');
-
-var _cachedData   = null; 
-
-if (!WA_SOPORTE) document.getElementById('btn-soporte').style.display = 'none';
-
-// ── PIN ──────────────────────────────────────────────────────
-function avanzarPin(el, nextId) { if(el.value.length===1 && nextId) document.getElementById(nextId).focus(); }
-function retrocederPin(e, el, prevId) { if(e.key==='Backspace' && el.value==='' && prevId) { document.getElementById(prevId).focus(); } }
-
+function avanzarPin(el, n) { if(el.value.length===1) document.getElementById(n).focus(); }
 function verificarPin() {
-    var p1 = document.getElementById('p1');
-    if(!p1) { mostrarApp(); return; } // Si el candado no existe (fue removido), pasamos directo
-    
-    var pin = ['p1','p2','p3','p4'].map(function(id){return document.getElementById(id).value;}).join('');
-    if(!PIN_ADMIN || pin===PIN_ADMIN) {
-        sessionStorage.setItem('admin_auth_'+EMPRESA, '1');
-        mostrarApp();
-    } else {
-        var err = document.getElementById('pin-error');
-        err.classList.remove('hidden');
-        ['p1','p2','p3','p4'].forEach(function(id){document.getElementById(id).value='';});
-        document.getElementById('p1').focus();
-        setTimeout(function(){err.classList.add('hidden');}, 2500);
-    }
+    var p = ['p1','p2','p3','p4'].map(id=>document.getElementById(id).value).join('');
+    if(p===PIN) { sessionStorage.setItem('auth_'+EMPRESA,'1'); mostrarApp(); }
+    else { alert('PIN Incorrecto'); ['p1','p2','p3','p4'].forEach(id=>document.getElementById(id).value=''); }
 }
-
 function mostrarApp() {
-    var ps = document.getElementById('pin-screen');
-    if(ps) ps.classList.add('hidden');
-    var ma = document.getElementById('main-app');
-    if(ma) {
-        ma.classList.remove('hidden');
-        ma.classList.add('block');
-    }
-    load();
-    cargarPremiosActuales();
-}
-
-if(!PIN_ADMIN || sessionStorage.getItem('admin_auth_'+EMPRESA)) {
-    mostrarApp();
-}
-
-// ── Helpers ──────────────────────────────────────────────────
-function parsearNombre(nombre){
-    var n = nombre || 'Desconocido';
-    var m = String(n).match(/^(.+?)\s+\(#(\d+)\)$/);
-    return m ? {base:m[1],entrada:'Entrada #'+m[2]} : {base:String(n),entrada:'Entrada #1'};
-}
-
-function escHtml(t){ return String(t||'').replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"').replace(/'/g,'''); }
-function encName(n){ return btoa(unescape(encodeURIComponent(n))); }
-function decName(b){ return decodeURIComponent(escape(atob(b))); }
-
-async function activarB64(b){ return activar(decName(b)); }
-function eliminarJugadorB64(b){ return eliminarJugador(decName(b)); }
-
-async function activar(nombre){
-    if(!confirm('¿Habilitar a '+nombre+'?'))return;
-    try{
-        var r=await fetch(API,{
-            method:'POST',
-            body:JSON.stringify({
-                empresa:EMPRESA,
-                usuario:nombre,
-                id_partido:0,
-                prediccion:'ACTIVADO',
-                token:TOKEN
-            })
-        });
-        var d=await r.json();
-        if(d.ok){load();}
-        else alert('Error al activar: '+(d.error||'desconocido'));
-    }catch(e){alert('Error de conexión.');}
-}
-
-function eliminarJugador(nombre){
-    if(!confirm('¿Ocultar a '+nombre+' de tu pantalla?\n\n(Esto no lo borra del Google Sheet)')){return;}
-    var key='deleted_'+EMPRESA;
-    var deleted=JSON.parse(localStorage.getItem(key)||'[]');
-    if(!deleted.includes(nombre)) deleted.push(nombre);
-    localStorage.setItem(key,JSON.stringify(deleted));
+    if(document.getElementById('pin-screen')) document.getElementById('pin-screen').classList.add('hidden');
+    document.getElementById('main-app').classList.remove('hidden');
+    document.getElementById('main-app').classList.add('block');
     load();
 }
+if(!PIN || sessionStorage.getItem('auth_'+EMPRESA)) mostrarApp();
 
-function getDeleted(){
-    return JSON.parse(localStorage.getItem('deleted_'+EMPRESA)||'[]');
-}
-
-function restaurarOcultos(){
-    if(confirm('¿Volver a mostrar a todos los jugadores que habías ocultado con el tachito?')){
-        localStorage.removeItem('deleted_'+EMPRESA);
-        load();
-    }
-}
-
-async function load(){
-    try{
-        var r=await fetch(API+'?accion=admin_view&empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN+'&_t='+Date.now(), {cache: 'no-store'});
-        var d=await r.json();
-        _cachedData=d;
-
-        var pend=[];
-        var act=[];
-        var deleted=getDeleted();
-        var pendNames = [];
+async function load() {
+    try {
+        const r = await fetch(API+'?accion=admin_view&empresa='+encodeURIComponent(EMPRESA)+'&token='+TOKEN+'&_t='+Date.now());
+        const d = await r.json();
         
-        if (d.solicitudes_pendientes) {
-            d.solicitudes_pendientes.forEach(function(s) {
-                if(!deleted.includes(s.nombre)) {
-                    pend.push({nombre: s.nombre, wa: s.wa_jugador||''});
-                    pendNames.push(s.nombre);
-                }
-            });
-        }
+        let pend = [], act = [], pendNames = [];
 
-        if (d.usuarios) {
-            d.usuarios.forEach(function(u) {
-                if(!deleted.includes(u.nombre) && !pendNames.includes(u.nombre)) {
-                    var str = JSON.stringify(u).toUpperCase();
-                    if(str.includes('"PENDIENTE"')) {
-                        pend.push({nombre: u.nombre, wa: u.wa_jugador||''});
-                        pendNames.push(u.nombre);
-                    } else {
-                        act.push({nombre: u.nombre, wa: u.wa_jugador||''});
-                    }
-                }
-            });
-        }
-        
-        if (d.ranking) {
-            d.ranking.forEach(function(u) {
-                if(!deleted.includes(u.nombre) && !pendNames.includes(u.nombre)) {
-                    if(u.puntos === 'PENDIENTE') {
-                        pend.push({nombre: u.nombre, wa: u.wa_jugador || u.wa || ''});
-                        pendNames.push(u.nombre);
-                    } else {
-                        var actNames = act.map(function(a){return a.nombre;});
-                        if(!actNames.includes(u.nombre)){
-                            act.push({nombre: u.nombre, wa: u.wa_jugador || u.wa || ''});
-                        }
-                    }
-                }
-            });
-        }
+        // EL SÚPER ESCÁNER UNIVERSAL: Busca en todas las cajas posibles (solicitudes, usuarios y ranking)
+        let totalRaw = [];
+        if(d.solicitudes_pendientes) totalRaw = totalRaw.concat(d.solicitudes_pendientes);
+        if(d.usuarios) totalRaw = totalRaw.concat(d.usuarios);
+        if(d.ranking) totalRaw = totalRaw.concat(d.ranking);
 
-        document.getElementById('lista-pendientes').innerHTML=pend.length
-            ?pend.map(function(u){
-                var p=parsearNombre(u.nombre);
-                var sn=encName(u.nombre);
-                var baseEsc=escHtml(p.base);
-                var waLink=u.wa?'<a href="https://wa.me/'+u.wa+'" target="_blank" class="btn-sm btn-slate rounded-lg" style="text-decoration:none;">💬</a>':'';
-                return '<div class="player-row">'+
-                       '<div><span class="font-bold text-sm block">'+baseEsc+'</span>'+
-                       '<span class="text-[10px] text-amber-400 font-black">'+p.entrada+'</span>'+
-                       (u.wa?'<span class="text-[10px] text-slate-500 block">📱 '+u.wa+'</span>':'')+
-                       '</div>'+
-                       '<div class="flex gap-2">'+
-                       waLink+
-                       '<button onclick="activarB64(\''+sn+'\')" class="btn-sm btn-green rounded-lg">Activar</button>'+
-                       '<button onclick="eliminarJugadorB64(\''+sn+'\')" class="btn-sm btn-red rounded-lg">🗑️</button>'+
-                       '</div></div>';
-            }).join('')
-            :'<p class="text-[10px] text-slate-600 italic text-center py-4">No hay solicitudes nuevas</p>';
+        totalRaw.forEach(u => {
+            if(!u || !u.nombre) return;
+            let n = u.nombre.trim();
+            if(pendNames.includes(n)) return;
 
-        document.getElementById('contador-activos').innerText=act.length+' jugadores';
-        document.getElementById('lista-activos').innerHTML=act.map(function(u){
-            var p=parsearNombre(u.nombre);
-            var sn=encName(u.nombre);
-            var baseEsc=escHtml(p.base);
-            var waAct=u.wa?'<a href="https://wa.me/'+u.wa+'" target="_blank" style="text-decoration:none;font-size:14px;" title="WhatsApp">💬</a>':'';
-            return '<div class="player-row">'+
-                   '<div><span class="text-sm font-bold text-slate-200">'+baseEsc+'</span>'+
-                   '<span class="text-[10px] text-slate-500 ml-2">'+p.entrada+'</span></div>'+
-                   '<div class="flex gap-2 items-center">'+waAct+
-                   '<button onclick="eliminarJugadorB64(\''+sn+'\')" class="btn-sm btn-red rounded-lg">🗑️</button>'+
-                   '</div></div>';
-        }).join('');
-
-        if(d.ranking) {
-            document.getElementById('ranking').innerHTML = d.ranking
-                .filter(function(u){ return u.puntos !== 'PENDIENTE' && !deleted.includes(u.nombre); })
-                .map(function(u,i){
-                    var p=parsearNombre(u.nombre);
-                    var baseEsc=escHtml(p.base);
-                    return '<div class="flex justify-between p-3 bg-slate-900 rounded-xl border border-slate-700 mb-1">'+
-                           '<div><span class="font-bold text-xs block">#'+(i+1)+' '+baseEsc+'</span>'+
-                           '<span class="text-[10px] text-slate-500">'+p.entrada+'</span></div>'+
-                           '<span class="font-black text-emerald-400 text-lg self-center">'+u.puntos+' pts</span></div>';
-                }).join('');
-        }
-
-    }catch(e){
-        console.error("Error al cargar:", e);
-        document.getElementById('lista-pendientes').innerHTML='<p class="text-[10px] text-red-400 font-bold text-center py-4">⚠️ Error al cargar datos. Intentá refrescar o revisá la consola.</p>';
-    }
-}
-
-function descargarCSV(){
-    if(!_cachedData) return;
-    var deleted=getDeleted();
-    
-    var mapUsers={};
-    if(_cachedData.ranking){
-        _cachedData.ranking.forEach(function(r){ mapUsers[r.nombre]={nombre:r.nombre, pts:r.puntos, pend:r.puntos==='PENDIENTE', wa:''}; });
-    }
-    if(_cachedData.usuarios){
-        _cachedData.usuarios.forEach(function(u){
-            if(!mapUsers[u.nombre]) mapUsers[u.nombre]={nombre:u.nombre, pts:0, pend:false, wa:u.wa_jugador||''};
-            if(u.wa_jugador) mapUsers[u.nombre].wa=u.wa_jugador;
-            if(JSON.stringify(u).toUpperCase().includes('"PENDIENTE"')) mapUsers[u.nombre].pend=true;
+            let esPendiente = JSON.stringify(u).toUpperCase().includes('PENDIENTE');
+            if(esPendiente) {
+                pend.push(u);
+                pendNames.push(n);
+            } else {
+                act.push(u);
+            }
         });
-    }
 
-    var rows=[['Nombre','Entrada','WhatsApp','Puntos','Estado']];
-    Object.values(mapUsers).filter(function(u){return !deleted.includes(u.nombre);}).forEach(function(u){
-        var p=parsearNombre(u.nombre);
-        rows.push([p.base, p.entrada, u.wa, u.pts, u.pend?'Pendiente':'Activo']);
-    });
+        document.getElementById('lista-pendientes').innerHTML = pend.map(u => `
+            <div class="player-row">
+                <span class="text-sm font-bold">${u.nombre}</span>
+                <button onclick="activar('${u.nombre}')" class="btn-green">Activar</button>
+            </div>`).join('') || '<p class="text-xs text-slate-500 italic text-center">Sin solicitudes nuevas</p>';
 
-    var csv=rows.map(function(r){
-        return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');
-    }).join('\r\n');
+        document.getElementById('lista-activos').innerHTML = act.map(u => `
+            <div class="player-row"><span class="text-sm text-slate-400">${u.nombre}</span></div>`).join('');
 
-    var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
-    var url=URL.createObjectURL(blob);
-    var a=document.createElement('a');
-    a.href=url;
-    a.download='clientes_'+EMPRESA_SAFE+'_'+new Date().toISOString().split('T')[0]+'.csv';
-    a.click();
-    URL.revokeObjectURL(url);
+    } catch(e) { console.error(e); }
 }
 
-async function cargarPremiosActuales(){
-    try{
-        var r=await fetch('https://raw.githubusercontent.com/'+GH_USER+'/'+GH_REPO+'/main/'+CONFIG_FILE+'?_='+Date.now());
-        if(r.ok){
-            var d=await r.json();
-            if(d.premios) document.getElementById('premios-editor').value=d.premios;
-        }
-    }catch(e){}
+async function activar(n) {
+    if(!confirm('¿Activar a '+n+'?')) return;
+    await fetch(API,{method:'POST',body:JSON.stringify({empresa:EMPRESA,usuario:n,id_partido:0,prediccion:'ACTIVADO',token:TOKEN})});
+    load();
 }
-
-async function guardarPremios(){
-    var premios=document.getElementById('premios-editor').value.trim();
-    var statusEl=document.getElementById('premios-status');
-    var btn=document.getElementById('btn-guardar-premios');
-    statusEl.classList.remove('hidden');
-    statusEl.style.color='#94a3b8';
-    statusEl.innerText='⏳ Guardando...';
-    btn.disabled=true;
-
-    try{
-        var configData={premios:premios,empresa:EMPRESA,updated:new Date().toISOString()};
-        var content=btoa(unescape(encodeURIComponent(JSON.stringify(configData,null,2))));
-        var apiUrl='https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/'+CONFIG_FILE;
-
-        var sha=null;
-        var check=await fetch(apiUrl + "?t=" + new Date().getTime(), {headers:{'Authorization':'token '+GH_TOKEN}, cache: 'no-store'});
-        if(check.ok){var cd=await check.json();sha=cd.sha;}
-
-        var payload={message:'Premios: '+EMPRESA,content:content};
-        if(sha) payload.sha=sha;
-
-        var res=await fetch(apiUrl,{method:'PUT',headers:{'Authorization':'token '+GH_TOKEN},body:JSON.stringify(payload)});
-        if(!res.ok) throw new Error('GitHub error '+res.status);
-
-        statusEl.style.color='#34d399';
-        statusEl.innerText='✅ Premios publicados — los jugadores verán los cambios en 1-2 minutos';
-    }catch(e){
-        statusEl.style.color='#f87171';
-        statusEl.innerText='❌ Error: '+e.message;
-    }finally{
-        btn.disabled=false;
-    }
-}
-
-function switchTab(id,btn){
-    document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
-    document.querySelectorAll('.btn-nav').forEach(function(b){b.classList.remove('active');});
-    document.getElementById('tab-'+id).classList.add('active');
-    btn.classList.add('active');
-    if(id==='premios') cargarPremiosActuales();
-}
-
-setInterval(load,30000);
 </script>
 </body>
 </html>
