@@ -109,7 +109,7 @@
     </nav>
 
     <a id="btn-soporte"
-       href="https://wa.me/?text=Hola!+Necesito+soporte+con+el+Prode+de+PRONTO10."
+       href="https://wa.me/5493541598575?text=Hola!+Necesito+soporte+con+el+Prode+de+PRONTO10."
        target="_blank"
        style="position:fixed;bottom:88px;right:16px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 16px rgba(37,211,102,0.45);z-index:60;text-decoration:none;"
        title="Soporte técnico">💬</a>
@@ -124,7 +124,7 @@ var TOKEN         = "ProdeAdmin2026Julio";
 var GH_USER       = "Julinihub";
 var GH_REPO       = "clientes-prode-2026";
 var CONFIG_FILE   = "config_" + EMPRESA_SAFE + ".json";
-var WA_SOPORTE    = "";
+var WA_SOPORTE    = "5493541598575";
 var PIN_ADMIN     = "";
 
 var GH_TOKEN      = "iwTpX3G6LK0o6rVH7w7PdCyfgDyj0PkYiLQk_phg".split('').reverse().join('');
@@ -177,7 +177,8 @@ function parsearNombre(nombre){
     return m ? {base:m[1],entrada:'Entrada #'+m[2]} : {base:String(n),entrada:'Entrada #1'};
 }
 
-function escHtml(t){ return String(t||'').replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"').replace(/'/g,'''); }
+// ARREGLO CLAVE: Separación de caracteres para evitar la inyección de sintaxis rota en el navegador
+function escHtml(t){ return String(t||'').replace(/&/g,'&'+'amp;').replace(/</g,'&'+'lt;').replace(/>/g,'&'+'gt;').replace(/"/g,'&'+'quot;').replace(/'/g,'&'+'#39;'); }
 function encName(n){ return btoa(unescape(encodeURIComponent(n))); }
 function decName(b){ return decodeURIComponent(escape(atob(b))); }
 
