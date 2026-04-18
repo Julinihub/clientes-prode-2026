@@ -310,7 +310,6 @@ async function solicitarActivacion(){
     try{
         await fetch(API,{
             method:'POST',
-            headers: { 'Content-Type': 'application/json' },
             body:JSON.stringify({
                 empresa:EMPRESA,
                 usuario:n,
@@ -450,7 +449,6 @@ async function votar(id,pred,btn){
         try{
             var r=await fetch(API,{
                 method:'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body:JSON.stringify({
                     empresa:EMPRESA,
                     usuario:n,
