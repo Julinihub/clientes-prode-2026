@@ -28,7 +28,7 @@
 </head>
 <body class="max-w-lg mx-auto">
 
-<div id="pin-screen" class="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-900">
+<div id="pin-screen" class="min-h-screen flex-col items-center justify-center p-6 bg-slate-900" style="display:none !important;">
     <div class="bg-slate-800 p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center border border-slate-700">
         <span class="text-5xl mb-4 block">🔐</span>
         <h2 class="text-xl font-black text-white uppercase italic tracking-wide mb-2">Panel Admin</h2>
@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<div id="main-app" style="display:none;">
+<div id="main-app" style="display:block;">
 
     <header class="p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 bg-slate-900 z-50">
         <div>
@@ -170,7 +170,7 @@ function verificarPin() {
     }
 }
 function mostrarApp() {
-    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('pin-screen').style.setProperty('display', 'none', 'important');
     document.getElementById('main-app').style.display = 'block';
     load();
     cargarPremiosActuales();
@@ -178,6 +178,9 @@ function mostrarApp() {
 
 if(!PIN_ADMIN || sessionStorage.getItem('admin_auth_'+EMPRESA)) {
     mostrarApp();
+} else {
+    // Si realmente hay PIN y NO estamos logueados, cargamos fondo igual.
+    // CSS ya maneja el display flex.
 }
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -199,7 +202,6 @@ async function activar(nombre){
     try{
         var r=await fetch(API,{
             method:'POST',
-            headers: { 'Content-Type': 'application/json' },
             body:JSON.stringify({
                 empresa:EMPRESA,
                 usuario:nombre,
