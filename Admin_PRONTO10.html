@@ -28,7 +28,7 @@
 </head>
 <body class="max-w-lg mx-auto">
 
-<div id="pin-screen" class="min-h-screen flex-col items-center justify-center p-6 bg-slate-900" style="display:none !important;">
+<div id="pin-screen" class="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-900">
     <div class="bg-slate-800 p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center border border-slate-700">
         <span class="text-5xl mb-4 block">🔐</span>
         <h2 class="text-xl font-black text-white uppercase italic tracking-wide mb-2">Panel Admin</h2>
@@ -48,7 +48,6 @@
         </button>
     </div>
 </div>
-
 <div id="main-app" style="display:block;">
 
     <header class="p-4 border-b border-slate-800 flex justify-between items-center sticky top-0 bg-slate-900 z-50">
@@ -156,7 +155,10 @@ if (!WA_SOPORTE) document.getElementById('btn-soporte').style.display = 'none';
 // ── PIN ──────────────────────────────────────────────────────
 function avanzarPin(el, nextId) { if(el.value.length===1 && nextId) document.getElementById(nextId).focus(); }
 function retrocederPin(e, el, prevId) { if(e.key==='Backspace' && el.value==='' && prevId) { document.getElementById(prevId).focus(); } }
+
 function verificarPin() {
+    var p1 = document.getElementById('p1');
+    if(!p1) { mostrarApp(); return; } // Si el HTML no existe, pasa directo
     var pin = ['p1','p2','p3','p4'].map(function(id){return document.getElementById(id).value;}).join('');
     if(!PIN_ADMIN || pin===PIN_ADMIN) {
         sessionStorage.setItem('admin_auth_'+EMPRESA, '1');
@@ -169,8 +171,10 @@ function verificarPin() {
         setTimeout(function(){err.classList.add('hidden');}, 2500);
     }
 }
+
 function mostrarApp() {
-    document.getElementById('pin-screen').style.setProperty('display', 'none', 'important');
+    var ps = document.getElementById('pin-screen');
+    if(ps) ps.style.display = 'none';
     document.getElementById('main-app').style.display = 'block';
     load();
     cargarPremiosActuales();
@@ -178,9 +182,6 @@ function mostrarApp() {
 
 if(!PIN_ADMIN || sessionStorage.getItem('admin_auth_'+EMPRESA)) {
     mostrarApp();
-} else {
-    // Si realmente hay PIN y NO estamos logueados, cargamos fondo igual.
-    // CSS ya maneja el display flex.
 }
 
 // ── Helpers ──────────────────────────────────────────────────
