@@ -96,20 +96,7 @@
         </div>
     </main>
 
-    
-    <main id="tab-ayuda" class="tab-content">
-        <div class="bg-slate-800 p-5 rounded-3xl border border-slate-700 space-y-4">
-            <h2 class="text-xs font-black text-emerald-400 uppercase tracking-widest border-b border-slate-700 pb-2">📖 Manual del Administrador</h2>
-            <div><p class="text-[11px] font-black text-white uppercase mb-1">👥 Pestaña Jugadores</p><p class="text-[11px] text-slate-400 leading-relaxed">Tocá <strong class="text-emerald-400">Activar</strong> para habilitar clientes. El botón 🗑️ oculta entradas erróneas.</p></div>
-            <div><p class="text-[11px] font-black text-white uppercase mb-1">📊 Pestaña Ranking</p><p class="text-[11px] text-slate-400 leading-relaxed">Posiciones en tiempo real. 3 puntos por acierto. Exportar CSV descarga nombres, WhatsApps y puntajes.</p></div>
-            <div><p class="text-[11px] font-black text-white uppercase mb-1">🎁 Pestaña Premios</p><p class="text-[11px] text-slate-400 leading-relaxed">Editá los premios cuando quieras. Los jugadores los ven en 1-2 minutos sin regenerar la app.</p></div>
-            <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 text-center">
-                <p class="text-[10px] text-amber-400 font-black uppercase mb-1">⚠️ LINK PARA LOS CLIENTES</p>
-                <div class="bg-slate-800 p-2 rounded-lg break-all text-[10px] text-emerald-400 font-black border border-slate-700">https://clientes-prode-2026.emprendimientoweb.workers.dev/DEMO_PRODE/ProdeApp_DEMO_PRODE.html</div>
-            </div>
-        </div>
-    </main>
-<nav class="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-lg bg-slate-900 h-[75px] flex items-center justify-around border-t border-slate-800 z-50">
+    <nav class="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-lg bg-slate-900 h-[75px] flex items-center justify-around border-t border-slate-800 z-50">
         <button onclick="switchTab('jugadores',this)" class="btn-nav active flex flex-col items-center">
             <span class="text-xl">👥</span><span class="text-[9px] font-black uppercase">Jugadores</span>
         </button>
@@ -118,9 +105,6 @@
         </button>
         <button onclick="switchTab('premios',this)" class="btn-nav flex flex-col items-center">
             <span class="text-xl">🎁</span><span class="text-[9px] font-black uppercase">Premios</span>
-        </button>
-        <button onclick="switchTab('ayuda',this)" class="btn-nav flex flex-col items-center">
-            <span class="text-xl">❓</span><span class="text-[9px] font-black uppercase">Ayuda</span>
         </button>
     </nav>
 
@@ -254,12 +238,6 @@ async function load(){
         var totalRaw=[];
         if(d.solicitudes_pendientes) totalRaw=totalRaw.concat(d.solicitudes_pendientes);
         if(d.usuarios) totalRaw=totalRaw.concat(d.usuarios);
-        // Marcar quiénes están ACTIVADOS para prioridad correcta
-        var activadosSet={};
-        totalRaw.forEach(function(u){
-            if(u&&u.nombre&&JSON.stringify(u).toUpperCase().includes('ACTIVADO'))
-                activadosSet[u.nombre.trim()]=true;
-        });
         if(d.ranking) totalRaw=totalRaw.concat(d.ranking);
 
         // FILTRO ANTI-DUPLICADOS
@@ -268,8 +246,7 @@ async function load(){
             var n = u.nombre.trim();
             if(deleted.includes(n)) return;
 
-            let raw2=JSON.stringify(u).toUpperCase();
-            var esPendiente = raw2.includes('PENDIENTE') && !activadosSet[n];
+            var esPendiente = JSON.stringify(u).toUpperCase().includes('"PENDIENTE"');
 
             if(esPendiente) {
                 if(!pendNames.includes(n)) {
